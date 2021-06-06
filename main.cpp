@@ -4,7 +4,7 @@
 
 const char g_szClassName[] = "windowClass";
 
-int build = 14;
+int build = 18;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
     switch(msg){
@@ -22,6 +22,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuFile, "&File");
             AppendMenu(hMenuFile, MF_STRING, ID_FILE_EXIT, "E&xit");
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuEdit, "&Edit");
+            AppendMenu(hMenuEdit, MF_STRING, ID_EDIT_COPYCONTENTS, "&Copy contents");
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuHelp, "&Help");
             AppendMenu(hMenuHelp, MF_STRING, ID_HELP_ABOUT, "&About");
 
@@ -45,6 +46,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         break;
     }
     case WM_DESTROY: {
+        ShowWindow(GetConsoleWindow(), SW_SHOW);
         PostQuitMessage(0);
         break;
     }
@@ -89,6 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
 
     ShowWindow(hwnd, nCmdShow);
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
     UpdateWindow(hwnd);
 
     while(GetMessage(&Msg, NULL, 0, 0) > 0){
