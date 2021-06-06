@@ -1,10 +1,28 @@
 #include <windows.h>
 #include "resource.h"
 #include <string>
+#include <iomanip>
 
 const char g_szClassName[] = "windowClass";
 
-int build = 18;
+int build = 20;
+
+template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
+    static const char* digits = "0123456789abcdef";
+    std::string rc(hex_len,'0');
+    for (size_t i=0, j=(hex_len-1)*4 ; i<hex_len; ++i,j-=4)
+        rc[i] = digits[(w>>j) & 0x0f];
+    return rc;
+}
+
+int time_low[7]; //8
+int time_mid[3]; //4
+int time_hi_and_version[3]; //4
+int clock_seq_hi_and_res_clock_seq_low[3]; //4
+int node[11]; //12
+
+void intToHex(){
+}
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
     switch(msg){
