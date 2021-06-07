@@ -5,7 +5,7 @@
 
 const char g_szClassName[] = "windowClass";
 
-int build = 20;
+int build = 24;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
@@ -43,6 +43,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
             AppendMenu(hMenuEdit, MF_STRING, ID_EDIT_COPYCONTENTS, "&Copy contents");
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuHelp, "&Help");
             AppendMenu(hMenuHelp, MF_STRING, ID_HELP_ABOUT, "&About");
+
+        CreateWindow(TEXT("button"), TEXT(""), WS_VISIBLE | WS_CHILD, 10, 10, 70, 10, hwnd, (HMENU)1, NULL, NULL);
 
         SetMenu(hwnd, hMenubar);
         break;
