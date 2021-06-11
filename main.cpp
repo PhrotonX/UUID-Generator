@@ -2,10 +2,18 @@
 #include "resource.h"
 #include <string>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
+
+#ifdef UNICODE
+typedef std::wostringstream tstringstream;
+#else
+typedef std::ostringstream tstringstream;
+#endif
 
 const char g_szClassName[] = "windowClass";
 
-int build = 24;
+int build = 30;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
@@ -20,8 +28,22 @@ int time_mid[3]; //4
 int time_hi_and_version[3]; //4
 int clock_seq_hi_and_res_clock_seq_low[3]; //4
 int node[11]; //12
+/*
+int time_low; //8
+int time_mid; //4
+int time_hi_and_version; //4
+int clock_seq_hi_and_res_clock_seq_low; //4
+int node; //12
+*/
+namespace converted{
+    tstringstream time_low;
+}
 
 void intToHex(){
+    srand((unsigned)time(0));
+
+    int time_low = rand() % 4294967295;
+    converted::time_low << time_low;
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
@@ -44,8 +66,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuHelp, "&Help");
             AppendMenu(hMenuHelp, MF_STRING, ID_HELP_ABOUT, "&About");
 
-        CreateWindow(TEXT("button"), TEXT(""), WS_VISIBLE | WS_CHILD, 10, 10, 70, 10, hwnd, (HMENU)1, NULL, NULL);
-
+        CreateWindow(TEXT("button"), TEXT(""), WS_VISIBLE | WS_CHILD, 30, 30, 70, 10, hwnd, (HMENU)1, NULL, NULL);
+        //SetWindowText(hwnd, converted::time_low.str().c_str());
+        CreateWindow("STATIC", "UUID:", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 10, 70, 20, hwnd, (HMENU)IDC_STATIC_TEXT, NULL, NULL);
+        CreateWindow("TEXT", converted::time_low.str().c_str(), WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 100, 140, 20, hwnd, (HMENU)IDC_TIME_LOW, NULL, NULL);
         SetMenu(hwnd, hMenubar);
         break;
     }
