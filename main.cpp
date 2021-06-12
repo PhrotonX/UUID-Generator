@@ -13,7 +13,7 @@ typedef std::ostringstream tstringstream;
 
 const char g_szClassName[] = "windowClass";
 
-int build = 30;
+int build = 38;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
@@ -59,6 +59,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         HMENU hMenuEdit = CreateMenu();
         HMENU hMenuHelp = CreateMenu();
 
+        HWND buttonGenerate;
+        HWND hEdit;
+
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuFile, "&File");
             AppendMenu(hMenuFile, MF_STRING, ID_FILE_EXIT, "E&xit");
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuEdit, "&Edit");
@@ -66,17 +69,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuHelp, "&Help");
             AppendMenu(hMenuHelp, MF_STRING, ID_HELP_ABOUT, "&About");
 
-        CreateWindow(TEXT("button"), TEXT(""), WS_VISIBLE | WS_CHILD, 30, 30, 70, 10, hwnd, (HMENU)1, NULL, NULL);
+        buttonGenerate = CreateWindow(TEXT("button"), TEXT("Generate"), WS_VISIBLE | WS_CHILD, 30, 30, 70, 30, hwnd, (HMENU)IDC_BUTTON_GENERATE, NULL, NULL);
         //SetWindowText(hwnd, converted::time_low.str().c_str());
-        CreateWindow("STATIC", "UUID:", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 10, 70, 20, hwnd, (HMENU)IDC_STATIC_TEXT, NULL, NULL);
-        CreateWindow("TEXT", converted::time_low.str().c_str(), WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 100, 140, 20, hwnd, (HMENU)IDC_TIME_LOW, NULL, NULL);
+        CreateWindow("STATIC", "UUID:", WS_VISIBLE | WS_CHILD | SS_LEFT, 10, 10, 70, 20, hwnd, (HMENU)IDC_STATIC_TEXT, NULL, NULL);
+        hEdit = CreateWindow("EDIT", converted::time_low.str().c_str(), WS_VISIBLE | WS_CHILD | SS_LEFT, 10, 100, 140, 20, hwnd, (HMENU)IDC_TIME_LOW, NULL, NULL);
         SetMenu(hwnd, hMenubar);
         break;
     }
     case WM_COMMAND: {
         switch(LOWORD(wParam))
         {
+            case IDC_BUTTON_GENERATE: {
+                intToHex();
+                InvalidateRect(hwnd, NULL, TRUE);
+                UpdateWindow(hwnd);
+                break;
+            }
             case ID_FILE_EXIT: {
+                ShowWindow(GetConsoleWindow(), SW_SHOW);
                 PostQuitMessage(0);
                 break;
             }

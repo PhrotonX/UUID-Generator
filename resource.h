@@ -1,6 +1,7 @@
 #ifndef RESOURCE_H_INCLUDED
 #define RESOURCE_H_INCLUDED
 
+#define IDC_BUTTON_GENERATE     20000
 #define IDC_STATIC_TEXT         30000
 #define IDC_TIME_LOW            30001
 #define ID_FILE_EXIT            40000
