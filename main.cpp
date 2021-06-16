@@ -13,7 +13,7 @@ typedef std::ostringstream tstringstream;
 
 const char g_szClassName[] = "windowClass";
 
-int build = 59;
+int build = 62;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
