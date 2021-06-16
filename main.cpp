@@ -13,7 +13,7 @@ typedef std::ostringstream tstringstream;
 
 const char g_szClassName[] = "windowClass";
 
-int build = 38;
+int build = 62;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
@@ -46,12 +46,67 @@ void intToHex(){
     converted::time_low << time_low;
 }
 
+INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch(msg)
+    {
+        case WM_CLOSE:
+            EndDialog(hwnd, 0);
+            break;
+        case WM_INITDIALOG:
+
+            return TRUE;
+        case WM_COMMAND:
+            {
+                switch(LOWORD(wParam))
+                {
+                    case ID_ABOUT_OK:
+                        {
+                            EndDialog(hwnd, ID_ABOUT_OK);
+                            break;
+                        }
+                }
+            }
+                    default:
+                        return FALSE;
+    }
+    return TRUE;
+}
+
+INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch(msg)
+    {
+        case WM_CLOSE:
+            ShowWindow(GetConsoleWindow(), SW_SHOW);
+            EndDialog(hwnd, 0);
+            break;
+        case WM_INITDIALOG:
+            return TRUE;
+            break;
+        case WM_COMMAND:
+            switch(LOWORD(wParam))
+            {
+                case ID_ABOUT:
+                {
+                    DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AboutDlgProc);
+                    break;
+                }
+            }
+            break;
+        default:
+            return FALSE;
+    }
+    return TRUE;
+
+}
+/*
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
     switch(msg){
     case WM_CLOSE: {
         DestroyWindow(hwnd);
         break;
-    }
+    }/*
     case WM_CREATE: {
         HMENU hMenubar = CreateMenu();
 
@@ -108,7 +163,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         return DefWindowProc(hwnd, msg, wParam, lParam);
     }
 }
-
+*/
+/*
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     WNDCLASSEX wc;
@@ -117,7 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     wc.cbSize           =   sizeof(WNDCLASSEX);
     wc.style            =   0;
-    wc.lpfnWndProc      =   WndProc;
+    //wc.lpfnWndProc      =   WndProc;
     wc.cbClsExtra       =   0;
     wc.cbWndExtra       =   0;
     wc.hInstance        =   hInstance;
@@ -135,9 +191,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    hwnd = CreateWindowEx(WS_EX_APPWINDOW, g_szClassName, "UUID Generator", WS_OVERLAPPEDWINDOW,
-                          CW_USEDEFAULT, CW_USEDEFAULT, 600, 400, NULL, NULL, hInstance, NULL);
-
+    //hwnd = CreateWindowEx(WS_EX_APPWINDOW, g_szClassName, "UUID Generator", WS_OVERLAPPEDWINDOW,
+    //                      CW_USEDEFAULT, CW_USEDEFAULT, 600, 400, NULL, NULL, hInstance, NULL);
+    hwnd = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), 0, (DLGPROC)WndProc);
 
     if(hwnd == NULL){
         MessageBox(NULL, "Error", "Window Creation Failed", MB_ICONHAND | MB_OK);
@@ -153,4 +209,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         DispatchMessage(&Msg);
     }
     return Msg.wParam;
+}
+*/
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)
+{
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+    return DialogBox(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, DlgProc);
 }

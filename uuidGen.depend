@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1623408030 source:c:\users\cpasc\documents\c++\projects\uuid generator\main.cpp
+1623560598 source:c:\users\cpasc\documents\c++\projects\uuid generator\main.cpp
 	<windows.h>
 	"resource.h"
 	<string>
@@ -7,5 +7,11 @@
 	<cstdlib>
 	<ctime>
 
-1623407802 c:\users\cpasc\documents\c++\projects\uuid generator\resource.h
+1623564089 c:\users\cpasc\documents\c++\projects\uuid generator\resource.h
+
+1623564089 source:c:\users\cpasc\documents\c++\projects\uuid generator\main.rc
+	<windows.h>
+	<commctrl.h>
+	<richedit.h>
+	"resource.h"
 
