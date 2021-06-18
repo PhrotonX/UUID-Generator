@@ -13,7 +13,7 @@ typedef std::ostringstream tstringstream;
 
 const char g_szClassName[] = "windowClass";
 
-int build = 62;
+int build = 75;
 
 template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     static const char* digits = "0123456789abcdef";
@@ -23,27 +23,26 @@ template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     return rc;
 }
 
-int time_low[7]; //8
+char time_low[7]; //8
 int time_mid[3]; //4
 int time_hi_and_version[3]; //4
 int clock_seq_hi_and_res_clock_seq_low[3]; //4
 int node[11]; //12
-/*
-int time_low; //8
-int time_mid; //4
-int time_hi_and_version; //4
-int clock_seq_hi_and_res_clock_seq_low; //4
-int node; //12
-*/
+
 namespace converted{
     tstringstream time_low;
 }
 
 void intToHex(){
-    srand((unsigned)time(0));
-
-    int time_low = rand() % 4294967295;
-    converted::time_low << time_low;
+    char hex[] = "0123456789abcdef";
+    time_low[0] = hex[rand()%16];
+    time_low[1] = hex[rand()%16];
+    time_low[2] = hex[rand()%16];
+    time_low[3] = hex[rand()%16];
+    time_low[4] = hex[rand()%16];
+    time_low[5] = hex[rand()%16];
+    time_low[6] = hex[rand()%16];
+    time_low[7] = hex[rand()%16];
 }
 
 INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -63,6 +62,18 @@ INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     case ID_ABOUT_OK:
                         {
                             EndDialog(hwnd, ID_ABOUT_OK);
+                            break;
+                        }
+                    case ID_ABOUT_UPDATE:
+                        {
+                            char linkUpdate[0xfff] = "https://github.com/PhrotonX/UUID-Generator/releases";
+                            ShellExecute(NULL, "open", linkUpdate, NULL, NULL, SW_SHOWNORMAL);
+                            break;
+                        }
+                    case ID_ABOUT_VIEW_REPO:
+                        {
+                            char linkViewRepo[0xfff] = "https://github.com/PhrotonX/UUID-Generator";
+                            ShellExecute(NULL, "open", linkViewRepo, NULL, NULL, SW_SHOWNORMAL);
                             break;
                         }
                 }
@@ -87,6 +98,14 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_COMMAND:
             switch(LOWORD(wParam))
             {
+                case ID_GENERATE:
+                {
+                    intToHex();
+                    SetDlgItemText(hwnd, IDC_UUID_EDIT, time_low);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, time_low);
+                    SetDlgItemText(hwnd, IDS_TIME_LOW, time_low);
+                    break;
+                }
                 case ID_ABOUT:
                 {
                     DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AboutDlgProc);
