@@ -4,8 +4,8 @@
 
 #define IDD_DIALOG1                             100
 #define IDD_DIALOG2                             101
-#define IDS_TIME_LOW                            40000
-#define ID_ABOUT_VIEW_REPO                      40000
+#define IDS_TIME_LOW                            40039
+#define ID_ABOUT_VIEW_REPO                      40038
 #define ID_COPY                                 40000
 #define ID_ABOUT_UPDATE                         40001
 #define ID_ABOUT_OK                             40002
