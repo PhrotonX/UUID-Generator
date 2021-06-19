@@ -4,49 +4,52 @@
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
-
-#ifdef UNICODE
-typedef std::wostringstream tstringstream;
-#else
-typedef std::ostringstream tstringstream;
-#endif
+#include <winuser.h>
 
 const char g_szClassName[] = "windowClass";
 
-int build = 75;
 
-template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
-    static const char* digits = "0123456789abcdef";
-    std::string rc(hex_len,'0');
-    for (size_t i=0, j=(hex_len-1)*4 ; i<hex_len; ++i,j-=4)
-        rc[i] = digits[(w>>j) & 0x0f];
-    return rc;
-}
+char time_mid[3]; //4
 
-char time_low[7]; //8
-int time_mid[3]; //4
-int time_hi_and_version[3]; //4
 int clock_seq_hi_and_res_clock_seq_low[3]; //4
 int node[11]; //12
 
-namespace converted{
-    tstringstream time_low;
+char uuidVersion;
+
+namespace uuid{
+    char time_low[8]; //8
 }
+
+
+char time_hi_and_version[3]; //4
+
 
 void intToHex(){
     char hex[] = "0123456789abcdef";
-    time_low[0] = hex[rand()%16];
-    time_low[1] = hex[rand()%16];
-    time_low[2] = hex[rand()%16];
-    time_low[3] = hex[rand()%16];
-    time_low[4] = hex[rand()%16];
-    time_low[5] = hex[rand()%16];
-    time_low[6] = hex[rand()%16];
-    time_low[7] = hex[rand()%16];
+    uuid::time_low[0] = hex[rand()%16];
+    uuid::time_low[1] = hex[rand()%16];
+    uuid::time_low[2] = hex[rand()%16];
+    uuid::time_low[3] = hex[rand()%16];
+    uuid::time_low[4] = hex[rand()%16];
+    uuid::time_low[5] = hex[rand()%16];
+    uuid::time_low[6] = hex[rand()%16];
+    uuid::time_low[7] = hex[rand()%16];
+
+    time_mid[0] = hex[rand()%16];
+    time_mid[1] = hex[rand()%16];
+    time_mid[2] = hex[rand()%16];
+    time_mid[3] = hex[rand()%16];
+
+    time_hi_and_version[0] = '4';
+    time_hi_and_version[1] = hex[rand()%16];
+    time_hi_and_version[2] = hex[rand()%16];
+    time_hi_and_version[3] = hex[rand()%16];
+    uuidVersion = time_hi_and_version[0];
 }
 
 INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+
     switch(msg)
     {
         case WM_CLOSE:
@@ -93,6 +96,10 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             EndDialog(hwnd, 0);
             break;
         case WM_INITDIALOG:
+            CheckRadioButton(hwnd, IDC_OPT_UUID_LWL, IDC_OPT_UUID_UPL, IDC_OPT_UUID_LWL);
+            CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
+            CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
+            CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPENS, BST_CHECKED);
             return TRUE;
             break;
         case WM_COMMAND:
@@ -101,9 +108,45 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 case ID_GENERATE:
                 {
                     intToHex();
-                    SetDlgItemText(hwnd, IDC_UUID_EDIT, time_low);
-                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, time_low);
-                    SetDlgItemText(hwnd, IDS_TIME_LOW, time_low);
+
+                    std::__cxx11::string hypen = "-";
+                    HWND hEdit = GetDlgItem(hwnd, IDC_UUID_EDIT);
+
+                    SetDlgItemText(hwnd, IDC_UUID_EDIT, "");
+
+                    TCHAR*pszStringTimeLow = uuid::time_low;
+                    int index0 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index0, (LPARAM)index0);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeLow);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, uuid::time_low);
+                    SetDlgItemText(hwnd, IDS_TIME_LOW, uuid::time_low);
+
+                    SetFocus(hEdit);
+                    int index = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    TCHAR*pszStringTimeMid = time_mid;
+                    int index2 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeMid);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_MID, time_mid);
+                    SetDlgItemText(hwnd, IDS_TIME_MID, time_mid);
+
+                    SetFocus(hEdit);
+                    int index3 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    TCHAR*pszStringTimeHiAndVer = time_hi_and_version;
+                    int index4 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeHiAndVer);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION, time_hi_and_version);
+                    SetDlgItemText(hwnd, IDS_TIME_HI_AND_VERSION, time_hi_and_version);
+                    //TCHAR*pszStringUUIDVer = uuidVersion;
+                    //SetDlgItemText(hwnd, IDS_VERSION, (LPCSTR)time_hi_and_version[0]);
+
                     break;
                 }
                 case ID_ABOUT:
