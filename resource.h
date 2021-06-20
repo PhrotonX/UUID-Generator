@@ -9,7 +9,7 @@
 #define ID_ABOUT_OK                             40002
 #define IDC_UUID_EDIT                           40013
 #define ID_GENERATE                             40016
-#define IDS_TIME_MID                            40017
+#define IDS_TIME_LOW                            40017
 #define ID_ABOUT                                40018
 #define IDS_TIME_HI_AND_VERSION                 40019
 #define IDS_VERSION                             40020
@@ -31,4 +31,4 @@
 #define IDC_OPT_UUID_USE_HYPENS                 40036
 #define IDC_OPT_UUID_USE_BRACES                 40037
 #define ID_ABOUT_VIEW_REPO                      40038
-#define IDS_TIME_LOW                            40039
+#define IDS_TIME_MID                            40039
