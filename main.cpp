@@ -16,6 +16,7 @@ char node[13]; //12
 
 char version[2] = "0";
 char variant[2] = "0";
+char macAddress[18] = "00:00:00:00:00:00";
 void charToHex(){
     char hex[] = "0123456789abcdef";
 
@@ -39,8 +40,8 @@ void charToHex(){
     time_hi_and_version[2] = hex[rand()%16];
     time_hi_and_version[3] = hex[rand()%16];
 
-    char variantDefault[] = "88889999aaaabbbb";
-    clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%16];
+    char variantDefault[] = "89ab";
+    clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
     variant[0] = clock_seq_hi_and_res_clock_seq_low[0];
     clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
     clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
@@ -58,6 +59,19 @@ void charToHex(){
     node[9] = hex[rand()%16];
     node[10] = hex[rand()%16];
     node[11] = hex[rand()%16];
+
+    macAddress[0] = node[0];
+    macAddress[1] = node[1];
+    macAddress[3] = node[2];
+    macAddress[4] = node[3];
+    macAddress[6] = node[4];
+    macAddress[7] = node[5];
+    macAddress[9] = node[6];
+    macAddress[10] = node[7];
+    macAddress[12] = node[8];
+    macAddress[13] = node[9];
+    macAddress[15] = node[10];
+    macAddress[16] = node[11];
 }
 
 INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -148,8 +162,8 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDS_TIME_MID, time_mid);
 
                     SetFocus(hEdit);
-                    int index3 = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
+                    int index2 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
 
                     TCHAR*pszStringTimeHiAndVer = time_hi_and_version;
@@ -161,8 +175,8 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDS_VERSION, version);
 
                     SetFocus(hEdit);
-                    int index5 = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index5, (LPARAM)index5);
+                    int index3 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
 
                     TCHAR*pszStringClockSeq = clock_seq_hi_and_res_clock_seq_low;
@@ -172,11 +186,22 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, clock_seq_hi_and_res_clock_seq_low);
                     SetDlgItemText(hwnd, IDS_VARIANT, variant);
 
+                    SetFocus(hEdit);
+                    int index4 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
                     TCHAR*pszStringNode = node;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringNode);
                     SetDlgItemText(hwnd, IDS_NODE, node);
+
+                    SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
                 }
+                case ID_COPY:
+                    {
+                        break;
+                    }
                 case ID_ABOUT:
                 {
                     DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AboutDlgProc);

@@ -30,5 +30,8 @@
 #define IDC_OPT_UUID_UPL                        40035
 #define IDC_OPT_UUID_USE_HYPENS                 40036
 #define IDC_OPT_UUID_USE_BRACES                 40037
-#define ID_ABOUT_VIEW_REPO                      40038
-#define IDS_TIME_MID                            40039
+#define IDC_OPT_UUID_UQM                        40038
+#define ID_ABOUT_VIEW_REPO                      40039
+#define IDS_TIME_MID                            40040
+#define IDS_MAC_ADDRESS				            40041
+#define ID_SAVE_INFO                            40042
