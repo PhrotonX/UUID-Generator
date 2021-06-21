@@ -4,37 +4,22 @@
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
-
-#ifdef UNICODE
-typedef std::wostringstream tstringstream;
-#else
-typedef std::ostringstream tstringstream;
-#endif
+#include <winuser.h>
 
 const char g_szClassName[] = "windowClass";
 
-int build = 75;
+char time_low[9] = "00000000"; //8
+char time_mid[5] = "0000"; //4
+char time_hi_and_version[5] = "0000"; //4
+char clock_seq_hi_and_res_clock_seq_low[5] = "0000"; //4
+char node[13]; //12
 
-template <typename I> std::string hexstr(I w, size_t hex_len = sizeof(I)<<1) {
-    static const char* digits = "0123456789abcdef";
-    std::string rc(hex_len,'0');
-    for (size_t i=0, j=(hex_len-1)*4 ; i<hex_len; ++i,j-=4)
-        rc[i] = digits[(w>>j) & 0x0f];
-    return rc;
-}
-
-char time_low[7]; //8
-int time_mid[3]; //4
-int time_hi_and_version[3]; //4
-int clock_seq_hi_and_res_clock_seq_low[3]; //4
-int node[11]; //12
-
-namespace converted{
-    tstringstream time_low;
-}
-
-void intToHex(){
+char version[2] = "0";
+char variant[2] = "0";
+char macAddress[18] = "00:00:00:00:00:00";
+void charToHex(){
     char hex[] = "0123456789abcdef";
+
     time_low[0] = hex[rand()%16];
     time_low[1] = hex[rand()%16];
     time_low[2] = hex[rand()%16];
@@ -43,10 +28,55 @@ void intToHex(){
     time_low[5] = hex[rand()%16];
     time_low[6] = hex[rand()%16];
     time_low[7] = hex[rand()%16];
+
+    time_mid[0] = hex[rand()%16];
+    time_mid[1] = hex[rand()%16];
+    time_mid[2] = hex[rand()%16];
+    time_mid[3] = hex[rand()%16];
+
+    time_hi_and_version[0] = '4';
+    version[0] = time_hi_and_version[0];
+    time_hi_and_version[1] = hex[rand()%16];
+    time_hi_and_version[2] = hex[rand()%16];
+    time_hi_and_version[3] = hex[rand()%16];
+
+    char variantDefault[] = "89ab";
+    clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
+    variant[0] = clock_seq_hi_and_res_clock_seq_low[0];
+    clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
+    clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
+    clock_seq_hi_and_res_clock_seq_low[3] = hex[rand()%16];
+
+    node[0] = hex[rand()%16];
+    node[1] = hex[rand()%16];
+    node[2] = hex[rand()%16];
+    node[3] = hex[rand()%16];
+    node[4] = hex[rand()%16];
+    node[5] = hex[rand()%16];
+    node[6] = hex[rand()%16];
+    node[7] = hex[rand()%16];
+    node[8] = hex[rand()%16];
+    node[9] = hex[rand()%16];
+    node[10] = hex[rand()%16];
+    node[11] = hex[rand()%16];
+
+    macAddress[0] = node[0];
+    macAddress[1] = node[1];
+    macAddress[3] = node[2];
+    macAddress[4] = node[3];
+    macAddress[6] = node[4];
+    macAddress[7] = node[5];
+    macAddress[9] = node[6];
+    macAddress[10] = node[7];
+    macAddress[12] = node[8];
+    macAddress[13] = node[9];
+    macAddress[15] = node[10];
+    macAddress[16] = node[11];
 }
 
 INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+
     switch(msg)
     {
         case WM_CLOSE:
@@ -93,6 +123,10 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             EndDialog(hwnd, 0);
             break;
         case WM_INITDIALOG:
+            CheckRadioButton(hwnd, IDC_OPT_UUID_LWL, IDC_OPT_UUID_UPL, IDC_OPT_UUID_LWL);
+            CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
+            CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
+            CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPENS, BST_CHECKED);
             return TRUE;
             break;
         case WM_COMMAND:
@@ -100,12 +134,74 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 case ID_GENERATE:
                 {
-                    intToHex();
-                    SetDlgItemText(hwnd, IDC_UUID_EDIT, time_low);
+                    charToHex();
+
+                    std::__cxx11::string hypen = "-";
+
+                    HWND hEdit = GetDlgItem(hwnd, IDC_UUID_EDIT);
+                    SetDlgItemText(hwnd, IDC_UUID_EDIT, "");
+
+                    TCHAR*pszStringTimeLow = time_low;
+                    //int index0 = GetWindowTextLength(hEdit);
+                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index0, (LPARAM)index0);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeLow);
                     SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, time_low);
                     SetDlgItemText(hwnd, IDS_TIME_LOW, time_low);
+                    //SetFocus(hEdit);
+                    int index = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    //charToHexTimeMid();
+
+                    TCHAR*pszStringTimeMid = time_mid;
+                    //int index2 = GetWindowTextLength(hEdit);
+                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeMid);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_MID, time_mid);
+                    SetDlgItemText(hwnd, IDS_TIME_MID, time_mid);
+
+                    SetFocus(hEdit);
+                    int index2 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    TCHAR*pszStringTimeHiAndVer = time_hi_and_version;
+                    //int index4 = GetWindowTextLength(hEdit);
+                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeHiAndVer);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION, time_hi_and_version);
+                    SetDlgItemText(hwnd, IDS_TIME_HI_AND_VERSION, time_hi_and_version);
+                    SetDlgItemText(hwnd, IDS_VERSION, version);
+
+                    SetFocus(hEdit);
+                    int index3 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    TCHAR*pszStringClockSeq = clock_seq_hi_and_res_clock_seq_low;
+                    //int index6 = GetWindowTextLength(hEdit);
+                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index6, (LPARAM)index6);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringClockSeq);
+                    SetDlgItemText(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, clock_seq_hi_and_res_clock_seq_low);
+                    SetDlgItemText(hwnd, IDS_VARIANT, variant);
+
+                    SetFocus(hEdit);
+                    int index4 = GetWindowTextLength(hEdit);
+                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    TCHAR*pszStringNode = node;
+                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringNode);
+                    SetDlgItemText(hwnd, IDS_NODE, node);
+
+                    SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
                 }
+                case ID_COPY:
+                    {
+                        break;
+                    }
                 case ID_ABOUT:
                 {
                     DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AboutDlgProc);
@@ -119,117 +215,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return TRUE;
 
 }
-/*
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
-    switch(msg){
-    case WM_CLOSE: {
-        DestroyWindow(hwnd);
-        break;
-    }/*
-    case WM_CREATE: {
-        HMENU hMenubar = CreateMenu();
 
-        HMENU hMenuFile = CreateMenu();
-        HMENU hMenuEdit = CreateMenu();
-        HMENU hMenuHelp = CreateMenu();
-
-        HWND buttonGenerate;
-        HWND hEdit;
-
-        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuFile, "&File");
-            AppendMenu(hMenuFile, MF_STRING, ID_FILE_EXIT, "E&xit");
-        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuEdit, "&Edit");
-            AppendMenu(hMenuEdit, MF_STRING, ID_EDIT_COPYCONTENTS, "&Copy contents");
-        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMenuHelp, "&Help");
-            AppendMenu(hMenuHelp, MF_STRING, ID_HELP_ABOUT, "&About");
-
-        buttonGenerate = CreateWindow(TEXT("button"), TEXT("Generate"), WS_VISIBLE | WS_CHILD, 30, 30, 70, 30, hwnd, (HMENU)IDC_BUTTON_GENERATE, NULL, NULL);
-        //SetWindowText(hwnd, converted::time_low.str().c_str());
-        CreateWindow("STATIC", "UUID:", WS_VISIBLE | WS_CHILD | SS_LEFT, 10, 10, 70, 20, hwnd, (HMENU)IDC_STATIC_TEXT, NULL, NULL);
-        hEdit = CreateWindow("EDIT", converted::time_low.str().c_str(), WS_VISIBLE | WS_CHILD | SS_LEFT, 10, 100, 140, 20, hwnd, (HMENU)IDC_TIME_LOW, NULL, NULL);
-        SetMenu(hwnd, hMenubar);
-        break;
-    }
-    case WM_COMMAND: {
-        switch(LOWORD(wParam))
-        {
-            case IDC_BUTTON_GENERATE: {
-                intToHex();
-                InvalidateRect(hwnd, NULL, TRUE);
-                UpdateWindow(hwnd);
-                break;
-            }
-            case ID_FILE_EXIT: {
-                ShowWindow(GetConsoleWindow(), SW_SHOW);
-                PostQuitMessage(0);
-                break;
-            }
-            case ID_HELP_ABOUT: {
-                char buf[10];
-                _ultoa(build,buf,10);
-                MessageBox(hwnd, buf, "v0.1.0.1 alpha", MB_OK);
-                break;
-            }
-        }
-        break;
-    }
-    case WM_DESTROY: {
-        ShowWindow(GetConsoleWindow(), SW_SHOW);
-        PostQuitMessage(0);
-        break;
-    }
-    default:
-        return DefWindowProc(hwnd, msg, wParam, lParam);
-    }
-}
-*/
-/*
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-    WNDCLASSEX wc;
-    HWND hwnd;
-    MSG Msg;
-
-    wc.cbSize           =   sizeof(WNDCLASSEX);
-    wc.style            =   0;
-    //wc.lpfnWndProc      =   WndProc;
-    wc.cbClsExtra       =   0;
-    wc.cbWndExtra       =   0;
-    wc.hInstance        =   hInstance;
-    wc.hIcon            =   LoadIcon(NULL, IDI_APPLICATION);
-    wc.hCursor          =   LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground    =   (HBRUSH)(COLOR_WINDOW+1);
-    wc.lpszMenuName     =   NULL;
-    wc.lpszClassName    =   g_szClassName;
-    wc.hIconSm          =   LoadIcon(NULL, IDI_APPLICATION);
-
-    if(!RegisterClassEx(&wc))
-    {
-        MessageBox(NULL, "Window Registration Failed!", "Error!",
-            MB_ICONEXCLAMATION | MB_OK);
-        return 0;
-    }
-
-    //hwnd = CreateWindowEx(WS_EX_APPWINDOW, g_szClassName, "UUID Generator", WS_OVERLAPPEDWINDOW,
-    //                      CW_USEDEFAULT, CW_USEDEFAULT, 600, 400, NULL, NULL, hInstance, NULL);
-    hwnd = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), 0, (DLGPROC)WndProc);
-
-    if(hwnd == NULL){
-        MessageBox(NULL, "Error", "Window Creation Failed", MB_ICONHAND | MB_OK);
-        return 0;
-    }
-
-    ShowWindow(hwnd, nCmdShow);
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
-    UpdateWindow(hwnd);
-
-    while(GetMessage(&Msg, NULL, 0, 0) > 0){
-        TranslateMessage(&Msg);
-        DispatchMessage(&Msg);
-    }
-    return Msg.wParam;
-}
-*/
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)
 {
     ShowWindow(GetConsoleWindow(), SW_HIDE);
