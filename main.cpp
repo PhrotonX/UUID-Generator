@@ -17,6 +17,15 @@ char node[13]; //12
 char version[2] = "0";
 char variant[2] = "0";
 char macAddress[18] = "00:00:00:00:00:00";
+char timestampMid[4] = "000";
+
+namespace variants{
+    bool ncs = false;
+    bool leachSalz = true;
+    bool microsoft = false;
+    bool reserved = false;
+}
+
 void charToHex(){
     char hex[] = "0123456789abcdef";
 
@@ -34,14 +43,30 @@ void charToHex(){
     time_mid[2] = hex[rand()%16];
     time_mid[3] = hex[rand()%16];
 
+    timestampMid[0] = time_mid[1];
+    timestampMid[1] = time_mid[2];
+    timestampMid[2] = time_mid[3];
+
     time_hi_and_version[0] = '4';
     version[0] = time_hi_and_version[0];
     time_hi_and_version[1] = hex[rand()%16];
     time_hi_and_version[2] = hex[rand()%16];
     time_hi_and_version[3] = hex[rand()%16];
 
-    char variantDefault[] = "89ab";
-    clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
+    if(variants::leachSalz == true){
+        char variantDefault[] = "89ab";
+        clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
+    }else if(variants::microsoft == true){
+        char variantMicrosoft[] = "cd";
+        clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
+    }else if(variants::ncs == true){
+        char variantNCS[] = "01234567";
+        clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
+    }else if(variants::reserved == true){
+        char variantReserved[] = "ef";
+        clock_seq_hi_and_res_clock_seq_low[0] = variantReserved[rand()%2];
+    }
+
     variant[0] = clock_seq_hi_and_res_clock_seq_low[0];
     clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
     clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
@@ -134,6 +159,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 case ID_GENERATE:
                 {
+
                     charToHex();
 
                     std::__cxx11::string hypen = "-";
@@ -142,23 +168,16 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDC_UUID_EDIT, "");
 
                     TCHAR*pszStringTimeLow = time_low;
-                    //int index0 = GetWindowTextLength(hEdit);
-                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index0, (LPARAM)index0);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeLow);
                     SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, time_low);
                     SetDlgItemText(hwnd, IDS_TIME_LOW, time_low);
-                    //SetFocus(hEdit);
                     int index = GetWindowTextLength(hEdit);
                     SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
 
-                    //charToHexTimeMid();
-
                     TCHAR*pszStringTimeMid = time_mid;
-                    //int index2 = GetWindowTextLength(hEdit);
-                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeMid);
-                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_MID, time_mid);
+                    SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_MID, timestampMid);
                     SetDlgItemText(hwnd, IDS_TIME_MID, time_mid);
 
                     SetFocus(hEdit);
@@ -167,8 +186,6 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
 
                     TCHAR*pszStringTimeHiAndVer = time_hi_and_version;
-                    //int index4 = GetWindowTextLength(hEdit);
-                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeHiAndVer);
                     SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION, time_hi_and_version);
                     SetDlgItemText(hwnd, IDS_TIME_HI_AND_VERSION, time_hi_and_version);
@@ -180,8 +197,6 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
 
                     TCHAR*pszStringClockSeq = clock_seq_hi_and_res_clock_seq_low;
-                    //int index6 = GetWindowTextLength(hEdit);
-                    //SendMessage(hEdit, EM_SETSEL, (WPARAM)index6, (LPARAM)index6);
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringClockSeq);
                     SetDlgItemText(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, clock_seq_hi_and_res_clock_seq_low);
                     SetDlgItemText(hwnd, IDS_VARIANT, variant);
@@ -198,8 +213,43 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
                 }
+                case IDC_ADV_RS_UCV: //Leach-Salz
+                    {
+                        variants::leachSalz = true;
+                        variants::microsoft = false;
+                        variants::ncs = false;
+                        variants::reserved = false;
+                        break;
+                    }
+                case IDC_ADV_RS_NCS:
+                    {
+                        variants::leachSalz = false;
+                        variants::microsoft = false;
+                        variants::ncs = true;
+                        variants::reserved = false;
+                        break;
+                    }
+                case IDC_ADV_RS_MS:
+                    {
+                        variants::leachSalz = false;
+                        variants::microsoft = true;
+                        variants::ncs = false;
+                        variants::reserved = false;
+                        break;
+                    }
+                case IDC_ADV_RS_RESERVED:
+                    {
+                        variants::leachSalz = false;
+                        variants::microsoft = false;
+                        variants::ncs = false;
+                        variants::reserved = true;
+                        break;
+                    }
                 case ID_COPY:
                     {
+                        HWND uuidEdit = GetDlgItem(hwnd, IDC_UUID_EDIT);
+                        SendMessage(uuidEdit, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
+                        SendMessage(uuidEdit, WM_COPY, 0, 0);
                         break;
                     }
                 case ID_ABOUT:

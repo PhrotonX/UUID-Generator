@@ -49,6 +49,8 @@ FONT 8, "Ms Shell Dlg"
     LTEXT           "time_hi_and_version:", 0, 212, 47, 68, 9, SS_LEFT, WS_EX_LEFT
     GROUPBOX        "Options", 0, 207, 130, 152, 103, 0, WS_EX_LEFT
     PUSHBUTTON      "About", ID_ABOUT, 302, 212, 50, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "?", ID_HELP, 217, 212, 27, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "Save Info", ID_SAVE_INFO, 247, 212, 50, 14, 0, WS_EX_LEFT
     GROUPBOX        "UUID Settings", 0, 212, 142, 140, 65, WS_GROUP, WS_EX_LEFT
     AUTOCHECKBOX    "Use Quotation Marks", IDC_OPT_UUID_UQM, 217, 192, 83, 8, 0, WS_EX_LEFT
     AUTOCHECKBOX    "Use Braces", IDC_OPT_UUID_USE_BRACES, 217, 182, 53, 8, 0, WS_EX_LEFT
@@ -56,17 +58,18 @@ FONT 8, "Ms Shell Dlg"
     AUTORADIOBUTTON "Uppercase Letters", IDC_OPT_UUID_UPL, 217, 162, 74, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "Lowercase Letters", IDC_OPT_UUID_LWL, 217, 152, 74, 8, 0, WS_EX_LEFT
     GROUPBOX        "Advanced Options", 0, 12, 77, 190, 155, 0, WS_EX_LEFT
-    GROUPBOX        "Version Settings", 0, 17, 137, 180, 90, WS_GROUP, WS_EX_LEFT
-    AUTORADIOBUTTON "Default value", IDC_ADV_VS_DV, 22, 147, 58, 8, 0, WS_EX_LEFT
-    AUTORADIOBUTTON "Random", IDC_ADV_VS_RAND, 22, 192, 43, 8, 0, WS_EX_LEFT
-    AUTORADIOBUTTON "User-defined", IDC_ADV_VS_UD, 22, 157, 56, 8, 0, WS_EX_LEFT
-    LTEXT           "Version (HEX)", 0, 27, 167, 45, 9, SS_LEFT, WS_EX_LEFT
-    EDITTEXT        IDC_ADV_VS_UD_HEX, 32, 177, 115, 14, ES_AUTOHSCROLL, WS_EX_LEFT
-    GROUPBOX        "Variant Settings", 0, 17, 87, 180, 45, WS_GROUP, WS_EX_LEFT
+    GROUPBOX        "Version Settings", 0, 17, 145, 180, 82, WS_GROUP, WS_EX_LEFT
+    AUTORADIOBUTTON "Default value", IDC_ADV_VS_DV, 22, 157, 58, 8, 0, WS_EX_LEFT
+    AUTORADIOBUTTON "User-defined", IDC_ADV_VS_UD, 22, 167, 56, 8, 0, WS_EX_LEFT
+    LTEXT           "Version (HEX)", 0, 27, 177, 45, 9, SS_LEFT, WS_EX_LEFT
+    COMBOBOX        IDC_ADV_VS_UD_HEX, 32, 187, 160, 50, CBS_DROPDOWN | CBS_HASSTRINGS, WS_EX_LEFT
+    AUTORADIOBUTTON "Random", IDC_ADV_VS_RAND, 22, 202, 43, 8, 0, WS_EX_LEFT
+    GROUPBOX        "Variant Settings", 0, 17, 87, 180, 55, WS_GROUP, WS_EX_LEFT
+    AUTORADIOBUTTON "Reserved (111)", IDC_ADV_RS_RESERVED, 22, 127, 65, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "Microsoft Backward Compability (110)", IDC_ADV_RS_MS, 22, 107, 134, 8, 0, WS_EX_LEFT
-    AUTORADIOBUTTON "Use Current Variant (10)", IDC_ADV_RS_UCV, 22, 97, 91, 8, 0, WS_EX_LEFT
+    AUTORADIOBUTTON "Use Current Variant (Leach-Salz) (10)", IDC_ADV_RS_UCV, 22, 97, 133, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "NCS Backward Compability (0)", IDC_ADV_RS_NCS, 22, 117, 112, 8, WS_TABSTOP, WS_EX_LEFT
-    PUSHBUTTON      "Save Info", ID_SAVE_INFO, 247, 212, 50, 14, 0, WS_EX_LEFT
+
 }
 
 
@@ -80,7 +83,7 @@ FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "About", 0, 7, 7, 115, 66, 0, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 57, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.3 alpha build 179", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.4 alpha build 197", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 129, 24, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 130, 42, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT
@@ -94,8 +97,8 @@ FONT 8, "Ms Shell Dlg"
 //
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 50000 VERSIONINFO
-    FILEVERSION     0,1,0,3
-    PRODUCTVERSION  0,1,0,3
+    FILEVERSION     0,1,0,4
+    PRODUCTVERSION  0,1,0,4
     FILEOS          VOS_NT_WINDOWS32
     FILETYPE        VFT_APP
     FILESUBTYPE     VFT2_UNKNOWN
