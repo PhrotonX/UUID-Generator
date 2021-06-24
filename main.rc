@@ -20,11 +20,11 @@ CAPTION "UUID Generator"
 FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "Generator", 0, 12, 7, 190, 65, WS_GROUP, WS_EX_LEFT
-    PUSHBUTTON      "Copy", ID_COPY, 77, 47, 50, 14, 0, WS_EX_LEFT
-    LTEXT           "UUID", 0, 22, 27, 19, 9, SS_LEFT, WS_EX_LEFT
-    DEFPUSHBUTTON   "Generate", ID_GENERATE, 22, 47, 50, 14, 0, WS_EX_LEFT
-    EDITTEXT        IDC_UUID_EDIT, 47, 27, 150, 12, ES_AUTOHSCROLL, WS_EX_LEFT
-    GROUPBOX        "UUID Info", 0, 207, 7, 150, 120, WS_GROUP, WS_EX_LEFT
+    PUSHBUTTON      "Copy", ID_COPY, 72, 52, 50, 14, 0, WS_EX_LEFT
+    LTEXT           "UUID", 0, 17, 17, 19, 9, SS_LEFT, WS_EX_LEFT
+    DEFPUSHBUTTON   "Generate", ID_GENERATE, 17, 52, 50, 14, 0, WS_EX_LEFT
+    EDITTEXT        IDC_UUID_EDIT, 17, 27, 180, 12, ES_AUTOHSCROLL, WS_EX_LEFT
+    GROUPBOX        "UUID Info", 0, 207, 7, 150, 115, WS_GROUP, WS_EX_LEFT
     LTEXT           "MAC Address:", 0, 212, 107, 46, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_MAC_ADDRESS, 262, 107, 90, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "-", 0, 272, 17, 8, 9, SS_LEFT, WS_EX_LEFT
@@ -47,16 +47,17 @@ FONT 8, "Ms Shell Dlg"
     LTEXT           "clock_seq_hi_and_res clock_seq_low:", 0, 212, 67, 124, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "time_low:", 0, 212, 27, 30, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "time_hi_and_version:", 0, 212, 47, 68, 9, SS_LEFT, WS_EX_LEFT
-    GROUPBOX        "Options", 0, 207, 130, 152, 103, 0, WS_EX_LEFT
+    GROUPBOX        "Options", 0, 207, 125, 152, 108, 0, WS_EX_LEFT
     PUSHBUTTON      "About", ID_ABOUT, 302, 212, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "?", ID_HELP, 217, 212, 27, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "Save Info", ID_SAVE_INFO, 247, 212, 50, 14, 0, WS_EX_LEFT
-    GROUPBOX        "UUID Settings", 0, 212, 142, 140, 65, WS_GROUP, WS_EX_LEFT
-    AUTOCHECKBOX    "Use Quotation Marks", IDC_OPT_UUID_UQM, 217, 192, 83, 8, 0, WS_EX_LEFT
-    AUTOCHECKBOX    "Use Braces", IDC_OPT_UUID_USE_BRACES, 217, 182, 53, 8, 0, WS_EX_LEFT
-    AUTOCHECKBOX    "Use Hypens", IDC_OPT_UUID_USE_HYPENS, 217, 172, 55, 8, 0, WS_EX_LEFT
-    AUTORADIOBUTTON "Uppercase Letters", IDC_OPT_UUID_UPL, 217, 162, 74, 8, 0, WS_EX_LEFT
-    AUTORADIOBUTTON "Lowercase Letters", IDC_OPT_UUID_LWL, 217, 152, 74, 8, 0, WS_EX_LEFT
+    GROUPBOX        "UUID Settings", 0, 212, 135, 140, 75, WS_GROUP, WS_EX_LEFT
+    AUTOCHECKBOX    "Use Braces before Quotation Marks", IDC_OPT_UUID_BRACES_BEFORE_QM, 217, 197, 129, 8, 0, WS_EX_LEFT
+    AUTOCHECKBOX    "Use Quotation Marks", IDC_OPT_UUID_UQM, 217, 187, 83, 8, 0, WS_EX_LEFT
+    AUTOCHECKBOX    "Use Braces", IDC_OPT_UUID_USE_BRACES, 217, 177, 53, 8, 0, WS_EX_LEFT
+    AUTOCHECKBOX    "Use Hyphens", IDC_OPT_UUID_USE_HYPHENS, 217, 167, 55, 8, 0, WS_EX_LEFT
+    AUTORADIOBUTTON "Uppercase Letters", IDC_OPT_UUID_UPL, 217, 157, 74, 8, 0, WS_EX_LEFT
+    AUTORADIOBUTTON "Lowercase Letters", IDC_OPT_UUID_LWL, 217, 147, 74, 8, 0, WS_EX_LEFT
     GROUPBOX        "Advanced Options", 0, 12, 77, 190, 155, 0, WS_EX_LEFT
     GROUPBOX        "Version Settings", 0, 17, 145, 180, 82, WS_GROUP, WS_EX_LEFT
     AUTORADIOBUTTON "Default value", IDC_ADV_VS_DV, 22, 157, 58, 8, 0, WS_EX_LEFT
@@ -69,7 +70,6 @@ FONT 8, "Ms Shell Dlg"
     AUTORADIOBUTTON "Microsoft Backward Compability (110)", IDC_ADV_RS_MS, 22, 107, 134, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "Use Current Variant (Leach-Salz) (10)", IDC_ADV_RS_UCV, 22, 97, 133, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "NCS Backward Compability (0)", IDC_ADV_RS_NCS, 22, 117, 112, 8, WS_TABSTOP, WS_EX_LEFT
-
 }
 
 
@@ -83,7 +83,7 @@ FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "About", 0, 7, 7, 115, 66, 0, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 57, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.4 alpha build 197", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.5 alpha build 209", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 129, 24, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 130, 42, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT
@@ -97,8 +97,8 @@ FONT 8, "Ms Shell Dlg"
 //
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 50000 VERSIONINFO
-    FILEVERSION     0,1,0,4
-    PRODUCTVERSION  0,1,0,4
+    FILEVERSION     0,1,0,5
+    PRODUCTVERSION  0,1,0,5
     FILEOS          VOS_NT_WINDOWS32
     FILETYPE        VFT_APP
     FILESUBTYPE     VFT2_UNKNOWN
