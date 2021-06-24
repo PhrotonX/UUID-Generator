@@ -25,23 +25,124 @@ namespace variants{
     bool microsoft = false;
     bool reserved = false;
 }
+namespace options{
+    bool lowercase = true;
+    bool uppercase = false;
+    /*
+    bool useHyphens = true;
+    bool useBraces = false;
+    bool useQuotationMarks = false;
+    */
+}
 
 void charToHex(){
-    char hex[] = "0123456789abcdef";
 
-    time_low[0] = hex[rand()%16];
-    time_low[1] = hex[rand()%16];
-    time_low[2] = hex[rand()%16];
-    time_low[3] = hex[rand()%16];
-    time_low[4] = hex[rand()%16];
-    time_low[5] = hex[rand()%16];
-    time_low[6] = hex[rand()%16];
-    time_low[7] = hex[rand()%16];
+    if(options::lowercase == true)
+    {
+        char hex[] = "0123456789abcdef";
 
-    time_mid[0] = hex[rand()%16];
-    time_mid[1] = hex[rand()%16];
-    time_mid[2] = hex[rand()%16];
-    time_mid[3] = hex[rand()%16];
+        time_low[0] = hex[rand()%16];
+        time_low[1] = hex[rand()%16];
+        time_low[2] = hex[rand()%16];
+        time_low[3] = hex[rand()%16];
+        time_low[4] = hex[rand()%16];
+        time_low[5] = hex[rand()%16];
+        time_low[6] = hex[rand()%16];
+        time_low[7] = hex[rand()%16];
+
+        time_mid[0] = hex[rand()%16];
+        time_mid[1] = hex[rand()%16];
+        time_mid[2] = hex[rand()%16];
+        time_mid[3] = hex[rand()%16];
+
+        time_hi_and_version[1] = hex[rand()%16];
+        time_hi_and_version[2] = hex[rand()%16];
+        time_hi_and_version[3] = hex[rand()%16];
+
+        if(variants::leachSalz == true){
+            char variantDefault[] = "89ab";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
+        }else if(variants::microsoft == true){
+            char variantMicrosoft[] = "cd";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
+        }else if(variants::ncs == true){
+            char variantNCS[] = "01234567";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
+        }else if(variants::reserved == true){
+            char variantReserved[] = "ef";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantReserved[rand()%2];
+        }
+
+        clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
+        clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
+        clock_seq_hi_and_res_clock_seq_low[3] = hex[rand()%16];
+
+        node[0] = hex[rand()%16];
+        node[1] = hex[rand()%16];
+        node[2] = hex[rand()%16];
+        node[3] = hex[rand()%16];
+        node[4] = hex[rand()%16];
+        node[5] = hex[rand()%16];
+        node[6] = hex[rand()%16];
+        node[7] = hex[rand()%16];
+        node[8] = hex[rand()%16];
+        node[9] = hex[rand()%16];
+        node[10] = hex[rand()%16];
+        node[11] = hex[rand()%16];
+    }
+    else if(options::uppercase == true)
+    {
+        char hex[] = "0123456789ABCDEF";
+
+        time_low[0] = hex[rand()%16];
+        time_low[1] = hex[rand()%16];
+        time_low[2] = hex[rand()%16];
+        time_low[3] = hex[rand()%16];
+        time_low[4] = hex[rand()%16];
+        time_low[5] = hex[rand()%16];
+        time_low[6] = hex[rand()%16];
+        time_low[7] = hex[rand()%16];
+
+        time_mid[0] = hex[rand()%16];
+        time_mid[1] = hex[rand()%16];
+        time_mid[2] = hex[rand()%16];
+        time_mid[3] = hex[rand()%16];
+
+        time_hi_and_version[1] = hex[rand()%16];
+        time_hi_and_version[2] = hex[rand()%16];
+        time_hi_and_version[3] = hex[rand()%16];
+
+        if(variants::leachSalz == true){
+            char variantDefault[] = "89AB";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
+        }else if(variants::microsoft == true){
+            char variantMicrosoft[] = "CD";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
+        }else if(variants::ncs == true){
+            char variantNCS[] = "01234567";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
+        }else if(variants::reserved == true){
+            char variantReserved[] = "EF";
+            clock_seq_hi_and_res_clock_seq_low[0] = variantReserved[rand()%2];
+        }
+
+        clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
+        clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
+        clock_seq_hi_and_res_clock_seq_low[3] = hex[rand()%16];
+
+        node[0] = hex[rand()%16];
+        node[1] = hex[rand()%16];
+        node[2] = hex[rand()%16];
+        node[3] = hex[rand()%16];
+        node[4] = hex[rand()%16];
+        node[5] = hex[rand()%16];
+        node[6] = hex[rand()%16];
+        node[7] = hex[rand()%16];
+        node[8] = hex[rand()%16];
+        node[9] = hex[rand()%16];
+        node[10] = hex[rand()%16];
+        node[11] = hex[rand()%16];
+    }
 
     timestampMid[0] = time_mid[1];
     timestampMid[1] = time_mid[2];
@@ -49,41 +150,8 @@ void charToHex(){
 
     time_hi_and_version[0] = '4';
     version[0] = time_hi_and_version[0];
-    time_hi_and_version[1] = hex[rand()%16];
-    time_hi_and_version[2] = hex[rand()%16];
-    time_hi_and_version[3] = hex[rand()%16];
-
-    if(variants::leachSalz == true){
-        char variantDefault[] = "89ab";
-        clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
-    }else if(variants::microsoft == true){
-        char variantMicrosoft[] = "cd";
-        clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
-    }else if(variants::ncs == true){
-        char variantNCS[] = "01234567";
-        clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
-    }else if(variants::reserved == true){
-        char variantReserved[] = "ef";
-        clock_seq_hi_and_res_clock_seq_low[0] = variantReserved[rand()%2];
-    }
 
     variant[0] = clock_seq_hi_and_res_clock_seq_low[0];
-    clock_seq_hi_and_res_clock_seq_low[1] = hex[rand()%16];
-    clock_seq_hi_and_res_clock_seq_low[2] = hex[rand()%16];
-    clock_seq_hi_and_res_clock_seq_low[3] = hex[rand()%16];
-
-    node[0] = hex[rand()%16];
-    node[1] = hex[rand()%16];
-    node[2] = hex[rand()%16];
-    node[3] = hex[rand()%16];
-    node[4] = hex[rand()%16];
-    node[5] = hex[rand()%16];
-    node[6] = hex[rand()%16];
-    node[7] = hex[rand()%16];
-    node[8] = hex[rand()%16];
-    node[9] = hex[rand()%16];
-    node[10] = hex[rand()%16];
-    node[11] = hex[rand()%16];
 
     macAddress[0] = node[0];
     macAddress[1] = node[1];
@@ -151,7 +219,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             CheckRadioButton(hwnd, IDC_OPT_UUID_LWL, IDC_OPT_UUID_UPL, IDC_OPT_UUID_LWL);
             CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
             CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
-            CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPENS, BST_CHECKED);
+            CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPHENS, BST_CHECKED);
             return TRUE;
             break;
         case WM_COMMAND:
@@ -162,28 +230,73 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
                     charToHex();
 
-                    std::__cxx11::string hypen = "-";
+                    std::__cxx11::string hyphen = "-";
+                    std::__cxx11::string brace1 = "{";
+                    std::__cxx11::string brace2 = "}";
+                    std::__cxx11::string quotationMark = "\"";
 
                     HWND hEdit = GetDlgItem(hwnd, IDC_UUID_EDIT);
                     SetDlgItemText(hwnd, IDC_UUID_EDIT, "");
+
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_BRACES_BEFORE_QM, BM_GETCHECK, 0, 0))
+                    {
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0))
+                            {
+                                SetFocus(hEdit);
+                                int indexBrace1 = GetWindowTextLength(hEdit);
+                                SendMessage(hEdit, EM_SETSEL, (WPARAM)indexBrace1, (LPARAM)indexBrace1);
+                                SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)brace1.c_str());
+                            }
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                            {
+                                SetFocus(hEdit);
+                                int indexQuotation1 = GetWindowTextLength(hEdit);
+                                SendMessage(hEdit, EM_SETSEL, (WPARAM)indexQuotation1, (LPARAM)indexQuotation1);
+                                SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
+                            }
+                    }else{
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                        {
+                            SetFocus(hEdit);
+                            int indexQuotation1 = GetWindowTextLength(hEdit);
+                            SendMessage(hEdit, EM_SETSEL, (WPARAM)indexQuotation1, (LPARAM)indexQuotation1);
+                            SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
+                        }
+
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0))
+                        {
+                            SetFocus(hEdit);
+                            int indexBrace1 = GetWindowTextLength(hEdit);
+                            SendMessage(hEdit, EM_SETSEL, (WPARAM)indexBrace1, (LPARAM)indexBrace1);
+                            SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)brace1.c_str());
+                        }
+                    }
 
                     TCHAR*pszStringTimeLow = time_low;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeLow);
                     SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_LOW, time_low);
                     SetDlgItemText(hwnd, IDS_TIME_LOW, time_low);
-                    int index = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
-                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_HYPHENS, BM_GETCHECK, 0, 0))
+                    {
+                        SetFocus(hEdit);
+                        int index = GetWindowTextLength(hEdit);
+                        SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+                        SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hyphen.c_str());
+                    }
 
                     TCHAR*pszStringTimeMid = time_mid;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeMid);
                     SetDlgItemText(hwnd, IDS_TIMESTAMP_TIME_MID, timestampMid);
                     SetDlgItemText(hwnd, IDS_TIME_MID, time_mid);
 
-                    SetFocus(hEdit);
-                    int index2 = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
-                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_HYPHENS, BM_GETCHECK, 0, 0))
+                    {
+                        SetFocus(hEdit);
+                        int index2 = GetWindowTextLength(hEdit);
+                        SendMessage(hEdit, EM_SETSEL, (WPARAM)index2, (LPARAM)index2);
+                        SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hyphen.c_str());
+                    }
 
                     TCHAR*pszStringTimeHiAndVer = time_hi_and_version;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeHiAndVer);
@@ -191,24 +304,64 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SetDlgItemText(hwnd, IDS_TIME_HI_AND_VERSION, time_hi_and_version);
                     SetDlgItemText(hwnd, IDS_VERSION, version);
 
-                    SetFocus(hEdit);
-                    int index3 = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
-                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_HYPHENS, BM_GETCHECK, 0, 0))
+                    {
+                        SetFocus(hEdit);
+                        int index3 = GetWindowTextLength(hEdit);
+                        SendMessage(hEdit, EM_SETSEL, (WPARAM)index3, (LPARAM)index3);
+                        SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hyphen.c_str());
+                    }
 
                     TCHAR*pszStringClockSeq = clock_seq_hi_and_res_clock_seq_low;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringClockSeq);
                     SetDlgItemText(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, clock_seq_hi_and_res_clock_seq_low);
                     SetDlgItemText(hwnd, IDS_VARIANT, variant);
 
-                    SetFocus(hEdit);
-                    int index4 = GetWindowTextLength(hEdit);
-                    SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
-                    SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hypen.c_str());
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_HYPHENS, BM_GETCHECK, 0, 0))
+                    {
+                        SetFocus(hEdit);
+                        int index4 = GetWindowTextLength(hEdit);
+                        SendMessage(hEdit, EM_SETSEL, (WPARAM)index4, (LPARAM)index4);
+                        SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hyphen.c_str());
+                    }
 
                     TCHAR*pszStringNode = node;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringNode);
                     SetDlgItemText(hwnd, IDS_NODE, node);
+
+                    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_BRACES_BEFORE_QM, BM_GETCHECK, 0, 0))
+                    {
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                            {
+                                SetFocus(hEdit);
+                                int indexQuotation2 = GetWindowTextLength(hEdit);
+                                SendMessage(hEdit, EM_SETSEL, (WPARAM)indexQuotation2, (LPARAM)indexQuotation2);
+                                SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
+                            }
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0))
+                            {
+                                SetFocus(hEdit);
+                                int indexBrace2 = GetWindowTextLength(hEdit);
+                                SendMessage(hEdit, EM_SETSEL, (WPARAM)indexBrace2, (LPARAM)indexBrace2);
+                                SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)brace2.c_str());
+                            }
+                    }else{
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0))
+                        {
+                            SetFocus(hEdit);
+                            int indexBrace2 = GetWindowTextLength(hEdit);
+                            SendMessage(hEdit, EM_SETSEL, (WPARAM)indexBrace2, (LPARAM)indexBrace2);
+                            SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)brace2.c_str());
+                        }
+
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                        {
+                            SetFocus(hEdit);
+                            int indexQuotation2 = GetWindowTextLength(hEdit);
+                            SendMessage(hEdit, EM_SETSEL, (WPARAM)indexQuotation2, (LPARAM)indexQuotation2);
+                            SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
+                        }
+                    }
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
@@ -243,6 +396,23 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         variants::microsoft = false;
                         variants::ncs = false;
                         variants::reserved = true;
+                        break;
+                    }
+                case IDC_OPT_UUID_LWL:
+                    {
+                        options::lowercase = true;
+                        options::uppercase = false;
+                        break;
+                    }
+                case IDC_OPT_UUID_UPL:
+                    {
+                        options::lowercase = false;
+                        options::uppercase = true;
+                        break;
+                    }
+                case IDC_OPT_UUID_USE_HYPHENS:
+                    {
+
                         break;
                     }
                 case ID_COPY:
