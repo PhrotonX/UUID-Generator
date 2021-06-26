@@ -28,14 +28,10 @@ namespace variants{
 namespace options{
     bool lowercase = true;
     bool uppercase = false;
-    /*
-    bool useHyphens = true;
-    bool useBraces = false;
-    bool useQuotationMarks = false;
-    */
 }
 
 void charToHex(){
+    srand(time(NULL));
 
     if(options::lowercase == true)
     {
