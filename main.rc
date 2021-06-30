@@ -14,7 +14,7 @@
 // Dialog resources
 //
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-IDD_DIALOG1 DIALOG 0, 0, 371, 244
+IDD_DIALOG1 DIALOG 0, 0, 371, 249
 STYLE DS_3DLOOK | DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_POPUP | WS_SYSMENU
 CAPTION "UUID Generator"
 FONT 8, "Ms Shell Dlg"
@@ -47,19 +47,20 @@ FONT 8, "Ms Shell Dlg"
     LTEXT           "clock_seq_hi_and_res clock_seq_low:", 0, 212, 67, 124, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "time_low:", 0, 212, 27, 30, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "time_hi_and_version:", 0, 212, 47, 68, 9, SS_LEFT, WS_EX_LEFT
-    GROUPBOX        "Options", 0, 207, 125, 152, 108, 0, WS_EX_LEFT
-    PUSHBUTTON      "About", ID_ABOUT, 302, 212, 50, 14, 0, WS_EX_LEFT
-    PUSHBUTTON      "?", ID_HELP, 217, 212, 27, 14, 0, WS_EX_LEFT
-    PUSHBUTTON      "Save Info", ID_SAVE_INFO, 247, 212, 50, 14, 0, WS_EX_LEFT
-    GROUPBOX        "UUID Settings", 0, 212, 135, 140, 75, WS_GROUP, WS_EX_LEFT
+    GROUPBOX        "Options", 0, 207, 125, 152, 115, 0, WS_EX_LEFT
+    PUSHBUTTON      "About", ID_ABOUT, 302, 222, 50, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "?", ID_HELP, 217, 222, 27, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "Save Info", ID_SAVE_INFO, 247, 222, 50, 14, 0, WS_EX_LEFT
+    GROUPBOX        "UUID Settings", 0, 212, 135, 140, 85, WS_GROUP, WS_EX_LEFT
+    AUTOCHECKBOX    "Time based seed RNG", IDC_OPT_UUID_SRNG, 217, 207, 88, 8, 0, WS_EX_LEFT
     AUTOCHECKBOX    "Use Braces before Quotation Marks", IDC_OPT_UUID_BRACES_BEFORE_QM, 217, 197, 129, 8, 0, WS_EX_LEFT
     AUTOCHECKBOX    "Use Quotation Marks", IDC_OPT_UUID_UQM, 217, 187, 83, 8, 0, WS_EX_LEFT
     AUTOCHECKBOX    "Use Braces", IDC_OPT_UUID_USE_BRACES, 217, 177, 53, 8, 0, WS_EX_LEFT
     AUTOCHECKBOX    "Use Hyphens", IDC_OPT_UUID_USE_HYPHENS, 217, 167, 55, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "Uppercase Letters", IDC_OPT_UUID_UPL, 217, 157, 74, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "Lowercase Letters", IDC_OPT_UUID_LWL, 217, 147, 74, 8, 0, WS_EX_LEFT
-    GROUPBOX        "Advanced Options", 0, 12, 77, 190, 155, 0, WS_EX_LEFT
-    GROUPBOX        "Version Settings", 0, 17, 145, 180, 82, WS_GROUP, WS_EX_LEFT
+    GROUPBOX        "Advanced Options", 0, 12, 77, 190, 160, 0, WS_EX_LEFT
+    GROUPBOX        "Version Settings", 0, 17, 145, 180, 85, WS_GROUP, WS_EX_LEFT
     AUTORADIOBUTTON "Default value", IDC_ADV_VS_DV, 22, 157, 58, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "User-defined", IDC_ADV_VS_UD, 22, 167, 56, 8, 0, WS_EX_LEFT
     LTEXT           "Version (HEX)", 0, 27, 177, 45, 9, SS_LEFT, WS_EX_LEFT
@@ -83,7 +84,7 @@ FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "About", 0, 7, 7, 115, 66, 0, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 57, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.6 alpha build 217", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.6 alpha build 218", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 129, 24, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 130, 42, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT

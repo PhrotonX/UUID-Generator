@@ -33,8 +33,9 @@
 #define IDC_OPT_UUID_USE_BRACES                 40038
 #define IDC_OPT_UUID_UQM                        40039
 #define IDC_OPT_UUID_BRACES_BEFORE_QM           40040
-#define ID_ABOUT_VIEW_REPO                      40041
-#define IDS_TIME_MID                            40042
-#define IDS_MAC_ADDRESS                         40043
-#define ID_SAVE_INFO                            40044
-#define ID_HELP                                 40045
+#define IDC_OPT_UUID_SRNG                       40041
+#define ID_ABOUT_VIEW_REPO                      40042
+#define IDS_TIME_MID                            40043
+#define IDS_MAC_ADDRESS                         40044
+#define ID_SAVE_INFO                            40045
+#define ID_HELP                                 40046
