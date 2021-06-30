@@ -25,6 +25,11 @@ namespace variants{
     bool microsoft = false;
     bool reserved = false;
 }
+namespace versions{
+    bool defaultVersion = true;
+    bool userDefined = false;
+    bool random = false;
+}
 namespace options{
     bool lowercase = true;
     bool uppercase = false;
