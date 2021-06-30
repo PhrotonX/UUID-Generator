@@ -30,9 +30,11 @@ namespace options{
     bool uppercase = false;
 }
 
-void charToHex(){
-    srand(time(NULL));
-
+void charToHex(HWND hwnd){
+    if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_SRNG, BM_GETCHECK, 0, 0))
+    {
+        srand(time(NULL));
+    }
     if(options::lowercase == true)
     {
         char hex[] = "0123456789abcdef";
@@ -216,6 +218,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
             CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
             CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPHENS, BST_CHECKED);
+            CheckDlgButton(hwnd, IDC_OPT_UUID_SRNG, BST_CHECKED);
             return TRUE;
             break;
         case WM_COMMAND:
@@ -224,7 +227,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 case ID_GENERATE:
                 {
 
-                    charToHex();
+                    charToHex(hwnd);
 
                     std::__cxx11::string hyphen = "-";
                     std::__cxx11::string brace1 = "{";
@@ -404,11 +407,6 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     {
                         options::lowercase = false;
                         options::uppercase = true;
-                        break;
-                    }
-                case IDC_OPT_UUID_USE_HYPHENS:
-                    {
-
                         break;
                     }
                 case ID_COPY:
