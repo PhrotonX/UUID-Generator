@@ -58,6 +58,15 @@ void charToHex(HWND hwnd){
         time_mid[2] = hex[rand()%16];
         time_mid[3] = hex[rand()%16];
 
+        if(versions::random == true)
+        {
+            time_hi_and_version[0] = hex[rand()%16];
+            version[0] = time_hi_and_version[0];
+        }else if(versions::defaultVersion == true)
+        {
+            time_hi_and_version[0] = '4';
+            version[0] = time_hi_and_version[0];
+        }
         time_hi_and_version[1] = hex[rand()%16];
         time_hi_and_version[2] = hex[rand()%16];
         time_hi_and_version[3] = hex[rand()%16];
@@ -111,6 +120,15 @@ void charToHex(HWND hwnd){
         time_mid[2] = hex[rand()%16];
         time_mid[3] = hex[rand()%16];
 
+        if(versions::random == true)
+        {
+            time_hi_and_version[0] = hex[rand()%16];
+            version[0] = time_hi_and_version[0];
+        }else if(versions::defaultVersion == true)
+        {
+            time_hi_and_version[0] = '4';
+            version[0] = time_hi_and_version[0];
+        }
         time_hi_and_version[1] = hex[rand()%16];
         time_hi_and_version[2] = hex[rand()%16];
         time_hi_and_version[3] = hex[rand()%16];
@@ -150,9 +168,6 @@ void charToHex(HWND hwnd){
     timestampMid[0] = time_mid[1];
     timestampMid[1] = time_mid[2];
     timestampMid[2] = time_mid[3];
-
-    time_hi_and_version[0] = '4';
-    version[0] = time_hi_and_version[0];
 
     variant[0] = clock_seq_hi_and_res_clock_seq_low[0];
 
@@ -400,6 +415,27 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         variants::microsoft = false;
                         variants::ncs = false;
                         variants::reserved = true;
+                        break;
+                    }
+                case IDC_ADV_VS_DV:
+                    {
+                        versions::defaultVersion = true;
+                        versions::userDefined = false;
+                        versions::random = false;
+                        break;
+                    }
+                case IDC_ADV_VS_UD:
+                    {
+                        versions::defaultVersion = false;
+                        versions::userDefined = true;
+                        versions::random = false;
+                        break;
+                    }
+                case IDC_ADV_VS_RAND:
+                    {
+                        versions::defaultVersion = true;
+                        versions::userDefined = false;
+                        versions::random = true;
                         break;
                     }
                 case IDC_OPT_UUID_LWL:
