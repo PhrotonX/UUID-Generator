@@ -39,3 +39,4 @@
 #define IDS_MAC_ADDRESS                         40044
 #define ID_SAVE_INFO                            40045
 #define ID_HELP                                 40046
+#define IDS_USER_DEFINED                        40047

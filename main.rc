@@ -63,8 +63,8 @@ FONT 8, "Ms Shell Dlg"
     GROUPBOX        "Version Settings", 0, 17, 145, 180, 85, WS_GROUP, WS_EX_LEFT
     AUTORADIOBUTTON "Default value", IDC_ADV_VS_DV, 22, 157, 58, 8, 0, WS_EX_LEFT
     AUTORADIOBUTTON "User-defined", IDC_ADV_VS_UD, 22, 167, 56, 8, 0, WS_EX_LEFT
-    LTEXT           "Version (HEX)", 0, 27, 177, 45, 9, SS_LEFT, WS_EX_LEFT
-    COMBOBOX        IDC_ADV_VS_UD_HEX, 32, 187, 160, 50, CBS_DROPDOWN | CBS_HASSTRINGS, WS_EX_LEFT
+    LTEXT           "Version (HEX)", IDS_USER_DEFINED, 27, 177, 45, 9, SS_LEFT, WS_EX_LEFT
+    COMBOBOX        IDC_ADV_VS_UD_HEX, 32, 187, 160, 55, WS_VSCROLL | CBS_DROPDOWN | CBS_HASSTRINGS, WS_EX_LEFT
     AUTORADIOBUTTON "Random", IDC_ADV_VS_RAND, 22, 202, 43, 8, 0, WS_EX_LEFT
     GROUPBOX        "Variant Settings", 0, 17, 87, 180, 55, WS_GROUP, WS_EX_LEFT
     AUTORADIOBUTTON "Reserved (111)", IDC_ADV_RS_RESERVED, 22, 127, 65, 8, 0, WS_EX_LEFT
@@ -84,7 +84,7 @@ FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "About", 0, 7, 7, 115, 66, 0, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 57, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.6 alpha build 241", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.6 alpha build 264", 0, 12, 27, 105, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 129, 24, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 130, 42, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT

@@ -28,7 +28,9 @@ namespace variants{
 namespace versions{
     bool defaultVersion = true;
     bool userDefined = false;
+    bool userDefinedEnabled = false;
     bool random = false;
+
     namespace userDefinedVer{
         bool ver1 = false;
         bool ver2 = false;
@@ -77,7 +79,20 @@ void charToHex(HWND hwnd){
         {
             time_hi_and_version[0] = '1';
             version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver2 == true)
+        {
+            time_hi_and_version[0] = '2';
+            version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver3 == true)
+        {
+            time_hi_and_version[0] = '3';
+            version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver5 == true)
+        {
+            time_hi_and_version[0] = '5';
+            version[0] = time_hi_and_version[0];
         }
+
         time_hi_and_version[1] = hex[rand()%16];
         time_hi_and_version[2] = hex[rand()%16];
         time_hi_and_version[3] = hex[rand()%16];
@@ -135,11 +150,28 @@ void charToHex(HWND hwnd){
         {
             time_hi_and_version[0] = hex[rand()%16];
             version[0] = time_hi_and_version[0];
-        }else if(versions::defaultVersion == true)
+        }else if(versions::defaultVersion == true || versions::userDefinedVer::ver4 == true)
         {
             time_hi_and_version[0] = '4';
             version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver1 == true)
+        {
+            time_hi_and_version[0] = '1';
+            version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver2 == true)
+        {
+            time_hi_and_version[0] = '2';
+            version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver3 == true)
+        {
+            time_hi_and_version[0] = '3';
+            version[0] = time_hi_and_version[0];
+        }else if(versions::userDefinedVer::ver5 == true)
+        {
+            time_hi_and_version[0] = '5';
+            version[0] = time_hi_and_version[0];
         }
+
         time_hi_and_version[1] = hex[rand()%16];
         time_hi_and_version[2] = hex[rand()%16];
         time_hi_and_version[3] = hex[rand()%16];
@@ -239,6 +271,8 @@ INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     HWND hUserDefined = GetDlgItem(hwnd, IDC_ADV_VS_UD_HEX);
+    HWND hUserDefinedText = GetDlgItem(hwnd, IDS_USER_DEFINED);
+    HWND hUBQM = GetDlgItem(hwnd, IDC_OPT_UUID_BRACES_BEFORE_QM);
     switch(msg)
     {
         case WM_CLOSE:
@@ -259,7 +293,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 SendMessage(hUserDefined, CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Version 4"));
                 SendMessage(hUserDefined, CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Version 5"));
 
-                //SendMessage(hUserDefined, CB_SETCURSEL, (WPARAM)1, (LPARAM) 0);
+                EnableWindow(hUserDefined, FALSE);
+                EnableWindow(hUserDefinedText, FALSE);
+                EnableWindow(hUBQM, FALSE);
             }
             return TRUE;
             break;
@@ -441,6 +477,8 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 case IDC_ADV_VS_DV:
                     {
+                        EnableWindow(hUserDefined, FALSE);
+                        EnableWindow(hUserDefinedText, FALSE);
                         versions::defaultVersion = true;
                         versions::userDefined = false;
                         versions::random = false;
@@ -448,6 +486,8 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 case IDC_ADV_VS_UD:
                     {
+                        EnableWindow(hUserDefined, TRUE);
+                        EnableWindow(hUserDefinedText, TRUE);
                         versions::defaultVersion = false;
                         versions::userDefined = true;
                         versions::random = false;
@@ -456,22 +496,52 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     {
                         if(HIWORD(wParam) == CBN_SELCHANGE)
                         {
-                            TCHAR ListItem[256];
+                            char ListItem[256];
                             int ItemIndex = SendMessage(hUserDefined, CB_GETCURSEL, 1, 0);
-                            (TCHAR)SendMessage(hUserDefined, (UINT) CB_GETLBTEXT, (WPARAM) ItemIndex, (LPARAM) ListItem);
-                            if(ListItem == "Version 1")
+                            SendMessage(hUserDefined, (UINT) CB_GETLBTEXT, (WPARAM) ItemIndex, (LPARAM) ListItem);
+                            if(strcmp(ListItem, "Version 1") == 0)
                             {
                                 versions::userDefinedVer::ver1 = true;
                                 versions::userDefinedVer::ver2 = false;
                                 versions::userDefinedVer::ver3 = false;
                                 versions::userDefinedVer::ver4 = false;
                                 versions::userDefinedVer::ver5 = false;
+                            }else if(strcmp(ListItem, "Version 2") == 0)
+                            {
+                                versions::userDefinedVer::ver1 = false;
+                                versions::userDefinedVer::ver2 = true;
+                                versions::userDefinedVer::ver3 = false;
+                                versions::userDefinedVer::ver4 = false;
+                                versions::userDefinedVer::ver5 = false;
+                            }else if(strcmp(ListItem, "Version 3") == 0)
+                            {
+                                versions::userDefinedVer::ver1 = false;
+                                versions::userDefinedVer::ver2 = false;
+                                versions::userDefinedVer::ver3 = true;
+                                versions::userDefinedVer::ver4 = false;
+                                versions::userDefinedVer::ver5 = false;
+                            }else if(strcmp(ListItem, "Version 4") == 0)
+                            {
+                                versions::userDefinedVer::ver1 = false;
+                                versions::userDefinedVer::ver2 = false;
+                                versions::userDefinedVer::ver3 = false;
+                                versions::userDefinedVer::ver4 = true;
+                                versions::userDefinedVer::ver5 = false;
+                            }else if(strcmp(ListItem, "Version 5") == 0)
+                            {
+                                versions::userDefinedVer::ver1 = false;
+                                versions::userDefinedVer::ver2 = false;
+                                versions::userDefinedVer::ver3 = false;
+                                versions::userDefinedVer::ver4 = false;
+                                versions::userDefinedVer::ver5 = true;
                             }
                         }
                         break;
                     }
                 case IDC_ADV_VS_RAND:
                     {
+                        EnableWindow(hUserDefined, FALSE);
+                        EnableWindow(hUserDefinedText, FALSE);
                         versions::defaultVersion = true;
                         versions::userDefined = false;
                         versions::random = true;
@@ -487,6 +557,26 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     {
                         options::lowercase = false;
                         options::uppercase = true;
+                        break;
+                    }
+                case IDC_OPT_UUID_USE_BRACES:
+                    {
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0) && SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                        {
+                            EnableWindow(hUBQM, TRUE);
+                        }else{
+                            EnableWindow(hUBQM, FALSE);
+                        }
+                        break;
+                    }
+                case IDC_OPT_UUID_UQM:
+                    {
+                        if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_USE_BRACES, BM_GETCHECK, 0, 0) && SendDlgItemMessage(hwnd, IDC_OPT_UUID_UQM, BM_GETCHECK, 0, 0))
+                            {
+                                EnableWindow(hUBQM, TRUE);
+                            }else{
+                                EnableWindow(hUBQM, FALSE);
+                            }
                         break;
                     }
                 case ID_COPY:
