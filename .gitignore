@@ -1,6 +1,10 @@
 **/bin
 **/obj
+**/.vs
 verHistory.txt
 uuidGen.cbp
 uuidGen.layout
 uuidGen.depend
+RCa01936
+helpFile.chw
+CppProperties.json

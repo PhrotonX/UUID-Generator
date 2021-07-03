@@ -586,6 +586,11 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         SendMessage(uuidEdit, WM_COPY, 0, 0);
                         break;
                     }
+                case ID_HELP:
+                {
+                    ShellExecute(NULL, "open", "helpFile.chm", NULL, NULL, 0);
+                    break;
+                }
                 case ID_ABOUT:
                 {
                     DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AboutDlgProc);
@@ -597,6 +602,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return FALSE;
     }
     return TRUE;
+
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)
