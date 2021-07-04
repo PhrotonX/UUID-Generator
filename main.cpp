@@ -588,7 +588,12 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 case ID_HELP:
                 {
-                    ShellExecute(NULL, "open", "helpFile.chm", NULL, NULL, 0);
+                    ShellExecute(NULL, "open", "helpFile.chm", NULL, NULL, SW_SHOWNORMAL);
+                    break;
+                }
+                case ID_SAVE_INFO:
+                {
+                    MessageBox(hwnd, "Coming on v0.1.0.8 alpha", "Coming Soon", MB_OK | MB_ICONINFORMATION);
                     break;
                 }
                 case ID_ABOUT:
