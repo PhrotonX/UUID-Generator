@@ -20,8 +20,8 @@
 #define IDS_TIMESTAMP_TIME_MID                  40025
 #define IDS_TIMESTAMP_TIME_LOW                  40026
 #define IDC_ADV_RS_UCV                          40027
-#define IDC_ADV_RS_MS                           40028
-#define IDC_ADV_RS_NCS                          40029
+#define IDC_ADV_RS_110                          40028
+#define IDC_ADV_RS_ZERO                         40029
 #define IDC_ADV_RS_RESERVED                     40030
 #define IDC_ADV_VS_DV                           40031
 #define IDC_ADV_VS_UD                           40032
