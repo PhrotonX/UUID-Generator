@@ -252,12 +252,14 @@ INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         {
                             char linkUpdate[0xfff] = "https://github.com/PhrotonX/UUID-Generator/releases";
                             ShellExecute(NULL, "open", linkUpdate, NULL, NULL, SW_SHOWNORMAL);
+                            EndDialog(hwnd, ID_ABOUT_UPDATE);
                             break;
                         }
                     case ID_ABOUT_VIEW_REPO:
                         {
                             char linkViewRepo[0xfff] = "https://github.com/PhrotonX/UUID-Generator";
                             ShellExecute(NULL, "open", linkViewRepo, NULL, NULL, SW_SHOWNORMAL);
+                            EndDialog(hwnd, ID_ABOUT_VIEW_REPO);
                             break;
                         }
                 }
