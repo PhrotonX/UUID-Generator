@@ -44,7 +44,7 @@ namespace options{
     bool uppercase = false;
 }
 
-BOOL SaveUUID(HWND hwnd, LPCTSTR pszFileName)
+BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
 {
     HANDLE hFile;
     BOOL bSuccess = FALSE;
@@ -96,8 +96,10 @@ void SaveFile(HWND hwnd)
 
     if(GetSaveFileName(&ofn))
     {
+        HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
         HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
-        SaveUUID(hMacAddress, szFileName);
+        SaveText(hMacAddressText, szFileName);
+        SaveText(hMacAddress, szFileName);
     }
 }
 
@@ -500,6 +502,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
+
+                    TCHAR*pszMacAddressText = "MAC Address: ";
+                    SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, macAddress);
                     break;
                 }
                 case IDC_ADV_RS_UCV: //Leach-Salz
