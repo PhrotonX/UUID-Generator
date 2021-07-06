@@ -20,9 +20,9 @@ char macAddress[18] = "00:00:00:00:00:00";
 char timestampMid[4] = "000";
 
 namespace variants{
-    bool ncs = false;
+    bool zero = false;
     bool leachSalz = true;
-    bool microsoft = false;
+    bool oneonezero = false;
     bool reserved = false;
 }
 namespace versions{
@@ -100,10 +100,10 @@ void charToHex(HWND hwnd){
         if(variants::leachSalz == true){
             char variantDefault[] = "89ab";
             clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
-        }else if(variants::microsoft == true){
+        }else if(variants::oneonezero == true){
             char variantMicrosoft[] = "cd";
             clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
-        }else if(variants::ncs == true){
+        }else if(variants::zero == true){
             char variantNCS[] = "01234567";
             clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
         }else if(variants::reserved == true){
@@ -179,10 +179,10 @@ void charToHex(HWND hwnd){
         if(variants::leachSalz == true){
             char variantDefault[] = "89AB";
             clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
-        }else if(variants::microsoft == true){
+        }else if(variants::oneonezero == true){
             char variantMicrosoft[] = "CD";
             clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
-        }else if(variants::ncs == true){
+        }else if(variants::zero == true){
             char variantNCS[] = "01234567";
             clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
         }else if(variants::reserved == true){
@@ -284,7 +284,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_INITDIALOG:
             {
                 CheckRadioButton(hwnd, IDC_OPT_UUID_LWL, IDC_OPT_UUID_UPL, IDC_OPT_UUID_LWL);
-                CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
+                CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_ZERO, IDC_ADV_RS_UCV);
                 CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
                 CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPHENS, BST_CHECKED);
                 CheckDlgButton(hwnd, IDC_OPT_UUID_SRNG, BST_CHECKED);
@@ -448,32 +448,32 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 case IDC_ADV_RS_UCV: //Leach-Salz
                     {
                         variants::leachSalz = true;
-                        variants::microsoft = false;
-                        variants::ncs = false;
+                        variants::oneonezero = false;
+                        variants::zero = false;
                         variants::reserved = false;
                         break;
                     }
-                case IDC_ADV_RS_NCS:
+                case IDC_ADV_RS_ZERO:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = false;
-                        variants::ncs = true;
+                        variants::oneonezero = false;
+                        variants::zero = true;
                         variants::reserved = false;
                         break;
                     }
-                case IDC_ADV_RS_MS:
+                case IDC_ADV_RS_110:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = true;
-                        variants::ncs = false;
+                        variants::oneonezero = true;
+                        variants::zero = false;
                         variants::reserved = false;
                         break;
                     }
                 case IDC_ADV_RS_RESERVED:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = false;
-                        variants::ncs = false;
+                        variants::oneonezero = false;
+                        variants::zero = false;
                         variants::reserved = true;
                         break;
                     }
