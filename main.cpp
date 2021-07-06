@@ -44,6 +44,63 @@ namespace options{
     bool uppercase = false;
 }
 
+BOOL SaveUUID(HWND hwnd, LPCTSTR pszFileName)
+{
+    HANDLE hFile;
+    BOOL bSuccess = FALSE;
+
+    hFile = CreateFile(pszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if(hFile != INVALID_HANDLE_VALUE)
+    {
+        DWORD dwTextLenght;
+
+        dwTextLenght = GetWindowTextLength(hwnd);
+
+        if(dwTextLenght > 0)
+        {
+            LPSTR pszText;
+            DWORD dwBufferSize = dwTextLenght + 1;
+
+            pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
+            if(pszText != NULL)
+            {
+                if(GetWindowText(hwnd, pszText, dwBufferSize))
+                {
+                    DWORD dwWritten;
+
+                    if(WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL))
+                        bSuccess = TRUE;
+                }
+                GlobalFree(pszText);
+            }
+        }
+        CloseHandle(hFile);
+    }
+    return bSuccess;
+}
+
+void SaveFile(HWND hwnd)
+{
+    OPENFILENAME ofn;
+    char szFileName[MAX_PATH] = "";
+
+    ZeroMemory(&ofn, sizeof(ofn));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hwnd;
+    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    ofn.lpstrFile = szFileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+    ofn.lpstrDefExt = "txt";
+
+    if(GetSaveFileName(&ofn))
+    {
+        HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+        SaveUUID(hMacAddress, szFileName);
+    }
+}
+
 void charToHex(HWND hwnd){
     if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_SRNG, BM_GETCHECK, 0, 0))
     {
@@ -595,7 +652,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 }
                 case ID_SAVE_INFO:
                 {
-                    MessageBox(hwnd, "Coming on v0.1.0.8 alpha", "Coming Soon", MB_OK | MB_ICONINFORMATION);
+                    SaveFile(hwnd);
                     break;
                 }
                 case ID_ABOUT:
