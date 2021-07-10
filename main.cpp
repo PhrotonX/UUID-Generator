@@ -500,7 +500,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                             SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
                         }
                     }
-                    char pszMacAddressText[14] = "MAC Address: ";
+                    TCHAR*pszMacAddressText = "MAC Address: ";
                     SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
