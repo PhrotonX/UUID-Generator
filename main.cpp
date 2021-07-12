@@ -96,8 +96,37 @@ void SaveFile(HWND hwnd)
 
     if(GetSaveFileName(&ofn))
     {
+        HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
+        HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
+        HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
+        HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
+        HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
+        HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
+        HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
+        HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
+        HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
+        HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
+        HWND hNode = GetDlgItem(hwnd, IDS_NODE);
         HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
         HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+        SaveText(hTSLow, szFileName);
+        SaveText(hTSMid, szFileName);
+        SaveText(hTSHigh, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hTimeLow, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hTimeMid, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hTimeHigh, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hVersion, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hClockSeq, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hVariant, szFileName);
+        SaveText(hNewLine, szFileName);
+        SaveText(hNode, szFileName);
+        SaveText(hNewLine, szFileName);
         SaveText(hMacAddressText, szFileName);
         SaveText(hMacAddress, szFileName);
     }
@@ -500,6 +529,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                             SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
                         }
                     }
+                    TCHAR*pszNewLine = "\n";
+                    SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
+
                     TCHAR*pszMacAddressText = "MAC Address: ";
                     SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
 
