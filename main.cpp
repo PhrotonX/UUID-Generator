@@ -1,3 +1,5 @@
+#define _GLIBCXX_USE_CXX11_ABI 0/1
+
 #include <windows.h>
 #include "resource.h"
 #include <string.h>
@@ -5,6 +7,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <winuser.h>
+#include <cstring>
+#include <string>
 
 const char g_szClassName[] = "windowClass";
 
