@@ -43,3 +43,4 @@
 #define IDSS_MAC_ADDRESS                        40048
 #define IDS_NEWLINE                             40049
 #define IDS_HYPHEN                              40050
+#define IDSS_TIMESTAMP                          40051

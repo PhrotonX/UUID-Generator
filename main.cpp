@@ -1,5 +1,3 @@
-#define _GLIBCXX_USE_CXX11_ABI 0/1
-
 #include <windows.h>
 #include "resource.h"
 #include <string.h>
@@ -7,8 +5,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <winuser.h>
-#include <cstring>
-#include <string>
 
 const char g_szClassName[] = "windowClass";
 
@@ -57,13 +53,11 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     if(hFile != INVALID_HANDLE_VALUE)
     {
         DWORD dwTextLenght;
-
         dwTextLenght = GetWindowTextLength(hwnd);
-
         if(dwTextLenght > 0)
         {
             LPSTR pszText;
-            DWORD dwBufferSize = dwTextLenght + 1;
+            DWORD dwBufferSize = dwTextLenght + 999;
 
             pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
             if(pszText != NULL)
@@ -100,6 +94,7 @@ void SaveFile(HWND hwnd)
 
     if(GetSaveFileName(&ofn))
     {
+        HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
         HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
         HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
         HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
@@ -533,6 +528,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                             SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
                         }
                     }
+                    TCHAR*pszTimestamp = "Timestamp: ";
+                    SetDlgItemText(hwnd, IDSS_TIMESTAMP, pszTimestamp);
+
                     TCHAR*pszNewLine = "\n";
                     SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
 
