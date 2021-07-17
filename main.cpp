@@ -57,7 +57,7 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
         if(dwTextLenght > 0)
         {
             LPSTR pszText;
-            DWORD dwBufferSize = dwTextLenght + 999;
+            DWORD dwBufferSize = dwTextLenght + 1;
 
             pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
             if(pszText != NULL)
@@ -89,13 +89,14 @@ void SaveFile(HWND hwnd)
     ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
     ofn.lpstrFile = szFileName;
     ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_NOVALIDATE;
     ofn.lpstrDefExt = "txt";
 
     if(GetSaveFileName(&ofn))
     {
         HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
         HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
+        HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
         HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
         HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
         HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
@@ -108,8 +109,11 @@ void SaveFile(HWND hwnd)
         HWND hNode = GetDlgItem(hwnd, IDS_NODE);
         HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
         HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+        SaveText(hTimestampText, szFileName);
         SaveText(hTSLow, szFileName);
+        SaveText(hHyphen, szFileName);
         SaveText(hTSMid, szFileName);
+        SaveText(hHyphen, szFileName);
         SaveText(hTSHigh, szFileName);
         SaveText(hNewLine, szFileName);
         SaveText(hTimeLow, szFileName);
@@ -530,6 +534,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                     TCHAR*pszTimestamp = "Timestamp: ";
                     SetDlgItemText(hwnd, IDSS_TIMESTAMP, pszTimestamp);
+
+                    TCHAR*pszHyphen = "-";
+                    SetDlgItemText(hwnd, IDS_HYPHEN, pszHyphen);
 
                     TCHAR*pszNewLine = "\n";
                     SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
