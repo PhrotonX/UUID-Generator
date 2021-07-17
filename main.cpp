@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <winuser.h>
+#include <fstream>
 
 const char g_szClassName[] = "windowClass";
 
@@ -89,11 +90,11 @@ void SaveFile(HWND hwnd)
     ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
     ofn.lpstrFile = szFileName;
     ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_NOVALIDATE;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
     ofn.lpstrDefExt = "txt";
+    ofn.lpstrTitle = "Save UUID Info";
 
-    if(GetSaveFileName(&ofn))
-    {
+    GetSaveFileName(&ofn);
         HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
         HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
         HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
@@ -132,7 +133,6 @@ void SaveFile(HWND hwnd)
         SaveText(hNewLine, szFileName);
         SaveText(hMacAddressText, szFileName);
         SaveText(hMacAddress, szFileName);
-    }
 }
 
 void charToHex(HWND hwnd){
@@ -532,16 +532,16 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                             SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
                         }
                     }
-                    TCHAR*pszTimestamp = "Timestamp: ";
+                    char pszTimestamp[] = "Timestamp: ";
                     SetDlgItemText(hwnd, IDSS_TIMESTAMP, pszTimestamp);
 
-                    TCHAR*pszHyphen = "-";
+                    char pszHyphen[] = "-";
                     SetDlgItemText(hwnd, IDS_HYPHEN, pszHyphen);
 
-                    TCHAR*pszNewLine = "\n";
+                    char pszNewLine[] = "\n";
                     SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
 
-                    TCHAR*pszMacAddressText = "MAC Address: ";
+                    char pszMacAddressText[] = "MAC Address: ";
                     SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
