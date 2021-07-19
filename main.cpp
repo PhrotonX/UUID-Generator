@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <winuser.h>
-#include <fstream>
+#include <tchar.h>
 
 const char g_szClassName[] = "windowClass";
 
@@ -50,7 +50,7 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     HANDLE hFile;
     BOOL bSuccess = FALSE;
 
-    hFile = CreateFile(pszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    hFile = CreateFileA(pszFileName, GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if(hFile != INVALID_HANDLE_VALUE)
     {
         DWORD dwTextLenght;
@@ -74,6 +74,8 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
             }
         }
         CloseHandle(hFile);
+    }else{
+        MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
     }
     return bSuccess;
 }
@@ -81,7 +83,7 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
 void SaveFile(HWND hwnd)
 {
     OPENFILENAME ofn;
-    char szFileName[MAX_PATH] = "";
+    TCHAR szFileName[MAX_PATH] = _T("");
 
     ZeroMemory(&ofn, sizeof(ofn));
 
@@ -94,45 +96,48 @@ void SaveFile(HWND hwnd)
     ofn.lpstrDefExt = "txt";
     ofn.lpstrTitle = "Save UUID Info";
 
-    GetSaveFileName(&ofn);
-        HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
-        HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
-        HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
-        HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
-        HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
-        HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
-        HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
-        HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
-        HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
-        HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
-        HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
-        HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
-        HWND hNode = GetDlgItem(hwnd, IDS_NODE);
-        HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
-        HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
-        SaveText(hTimestampText, szFileName);
-        SaveText(hTSLow, szFileName);
-        SaveText(hHyphen, szFileName);
-        SaveText(hTSMid, szFileName);
-        SaveText(hHyphen, szFileName);
-        SaveText(hTSHigh, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hTimeLow, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hTimeMid, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hTimeHigh, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hVersion, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hClockSeq, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hVariant, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hNode, szFileName);
-        SaveText(hNewLine, szFileName);
-        SaveText(hMacAddressText, szFileName);
-        SaveText(hMacAddress, szFileName);
+        if(GetSaveFileName(&ofn))
+        {
+            HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
+            HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
+            HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
+            HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
+            HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
+            HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
+            HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
+            HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
+            HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
+            HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
+            HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
+            HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
+            HWND hNode = GetDlgItem(hwnd, IDS_NODE);
+            HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
+            HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+            SaveText(hTimestampText, szFileName);
+            SaveText(hTSLow, szFileName);
+            SaveText(hHyphen, szFileName);
+            SaveText(hTSMid, szFileName);
+            SaveText(hHyphen, szFileName);
+            SaveText(hTSHigh, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeLow, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeMid, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeHigh, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hVersion, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hClockSeq, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hVariant, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hNode, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hMacAddressText, szFileName);
+            SaveText(hMacAddress, szFileName);
+        }
+
 }
 
 void charToHex(HWND hwnd){
