@@ -20,8 +20,8 @@
 #define IDS_TIMESTAMP_TIME_MID                  40025
 #define IDS_TIMESTAMP_TIME_LOW                  40026
 #define IDC_ADV_RS_UCV                          40027
-#define IDC_ADV_RS_MS                           40028
-#define IDC_ADV_RS_NCS                          40029
+#define IDC_ADV_RS_110                          40028
+#define IDC_ADV_RS_ZERO                         40029
 #define IDC_ADV_RS_RESERVED                     40030
 #define IDC_ADV_VS_DV                           40031
 #define IDC_ADV_VS_UD                           40032
@@ -40,3 +40,7 @@
 #define ID_SAVE_INFO                            40045
 #define ID_HELP                                 40046
 #define IDS_USER_DEFINED                        40047
+#define IDSS_MAC_ADDRESS                        40048
+#define IDS_NEWLINE                             40049
+#define IDS_HYPHEN                              40050
+#define IDSS_TIMESTAMP                          40051

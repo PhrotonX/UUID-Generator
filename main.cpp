@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <winuser.h>
+#include <tchar.h>
 
 const char g_szClassName[] = "windowClass";
 
@@ -20,9 +21,9 @@ char macAddress[18] = "00:00:00:00:00:00";
 char timestampMid[4] = "000";
 
 namespace variants{
-    bool ncs = false;
+    bool zero = false;
     bool leachSalz = true;
-    bool microsoft = false;
+    bool oneonezero = false;
     bool reserved = false;
 }
 namespace versions{
@@ -42,6 +43,101 @@ namespace versions{
 namespace options{
     bool lowercase = true;
     bool uppercase = false;
+}
+
+BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
+{
+    HANDLE hFile;
+    BOOL bSuccess = FALSE;
+
+    hFile = CreateFileA(pszFileName, GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if(hFile != INVALID_HANDLE_VALUE)
+    {
+        DWORD dwTextLenght;
+        dwTextLenght = GetWindowTextLength(hwnd);
+        if(dwTextLenght > 0)
+        {
+            LPSTR pszText;
+            DWORD dwBufferSize = dwTextLenght + 1;
+
+            pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
+            if(pszText != NULL)
+            {
+                if(GetWindowText(hwnd, pszText, dwBufferSize))
+                {
+                    DWORD dwWritten;
+
+                    if(WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL))
+                        bSuccess = TRUE;
+                }
+                GlobalFree(pszText);
+            }
+        }
+        CloseHandle(hFile);
+    }else{
+        MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
+    }
+    return bSuccess;
+}
+
+void SaveFile(HWND hwnd)
+{
+    OPENFILENAME ofn;
+    TCHAR szFileName[MAX_PATH] = _T("");
+
+    ZeroMemory(&ofn, sizeof(ofn));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hwnd;
+    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    ofn.lpstrFile = szFileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+    ofn.lpstrDefExt = "txt";
+    ofn.lpstrTitle = "Save UUID Info";
+
+        if(GetSaveFileName(&ofn))
+        {
+            HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
+            HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
+            HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
+            HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
+            HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
+            HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
+            HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
+            HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
+            HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
+            HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
+            HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
+            HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
+            HWND hNode = GetDlgItem(hwnd, IDS_NODE);
+            HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
+            HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+            SaveText(hTimestampText, szFileName);
+            SaveText(hTSLow, szFileName);
+            SaveText(hHyphen, szFileName);
+            SaveText(hTSMid, szFileName);
+            SaveText(hHyphen, szFileName);
+            SaveText(hTSHigh, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeLow, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeMid, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hTimeHigh, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hVersion, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hClockSeq, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hVariant, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hNode, szFileName);
+            SaveText(hNewLine, szFileName);
+            SaveText(hMacAddressText, szFileName);
+            SaveText(hMacAddress, szFileName);
+        }
+
 }
 
 void charToHex(HWND hwnd){
@@ -100,10 +196,10 @@ void charToHex(HWND hwnd){
         if(variants::leachSalz == true){
             char variantDefault[] = "89ab";
             clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
-        }else if(variants::microsoft == true){
+        }else if(variants::oneonezero == true){
             char variantMicrosoft[] = "cd";
             clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
-        }else if(variants::ncs == true){
+        }else if(variants::zero == true){
             char variantNCS[] = "01234567";
             clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
         }else if(variants::reserved == true){
@@ -179,10 +275,10 @@ void charToHex(HWND hwnd){
         if(variants::leachSalz == true){
             char variantDefault[] = "89AB";
             clock_seq_hi_and_res_clock_seq_low[0] = variantDefault[rand()%4];
-        }else if(variants::microsoft == true){
+        }else if(variants::oneonezero == true){
             char variantMicrosoft[] = "CD";
             clock_seq_hi_and_res_clock_seq_low[0] = variantMicrosoft[rand()%2];
-        }else if(variants::ncs == true){
+        }else if(variants::zero == true){
             char variantNCS[] = "01234567";
             clock_seq_hi_and_res_clock_seq_low[0] = variantNCS[rand()%8];
         }else if(variants::reserved == true){
@@ -252,12 +348,14 @@ INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         {
                             char linkUpdate[0xfff] = "https://github.com/PhrotonX/UUID-Generator/releases";
                             ShellExecute(NULL, "open", linkUpdate, NULL, NULL, SW_SHOWNORMAL);
+                            EndDialog(hwnd, ID_ABOUT_UPDATE);
                             break;
                         }
                     case ID_ABOUT_VIEW_REPO:
                         {
                             char linkViewRepo[0xfff] = "https://github.com/PhrotonX/UUID-Generator";
                             ShellExecute(NULL, "open", linkViewRepo, NULL, NULL, SW_SHOWNORMAL);
+                            EndDialog(hwnd, ID_ABOUT_VIEW_REPO);
                             break;
                         }
                 }
@@ -282,7 +380,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_INITDIALOG:
             {
                 CheckRadioButton(hwnd, IDC_OPT_UUID_LWL, IDC_OPT_UUID_UPL, IDC_OPT_UUID_LWL);
-                CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_NCS, IDC_ADV_RS_UCV);
+                CheckRadioButton(hwnd, IDC_ADV_RS_UCV, IDC_ADV_RS_ZERO, IDC_ADV_RS_UCV);
                 CheckRadioButton(hwnd, IDC_ADV_VS_DV, IDC_ADV_VS_UD, IDC_ADV_VS_DV);
                 CheckDlgButton(hwnd, IDC_OPT_UUID_USE_HYPHENS, BST_CHECKED);
                 CheckDlgButton(hwnd, IDC_OPT_UUID_SRNG, BST_CHECKED);
@@ -439,6 +537,17 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                             SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)quotationMark.c_str());
                         }
                     }
+                    char pszTimestamp[] = "Timestamp: ";
+                    SetDlgItemText(hwnd, IDSS_TIMESTAMP, pszTimestamp);
+
+                    char pszHyphen[] = "-";
+                    SetDlgItemText(hwnd, IDS_HYPHEN, pszHyphen);
+
+                    char pszNewLine[] = "\n";
+                    SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
+
+                    char pszMacAddressText[] = "MAC Address: ";
+                    SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
@@ -446,32 +555,32 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 case IDC_ADV_RS_UCV: //Leach-Salz
                     {
                         variants::leachSalz = true;
-                        variants::microsoft = false;
-                        variants::ncs = false;
+                        variants::oneonezero = false;
+                        variants::zero = false;
                         variants::reserved = false;
                         break;
                     }
-                case IDC_ADV_RS_NCS:
+                case IDC_ADV_RS_ZERO:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = false;
-                        variants::ncs = true;
+                        variants::oneonezero = false;
+                        variants::zero = true;
                         variants::reserved = false;
                         break;
                     }
-                case IDC_ADV_RS_MS:
+                case IDC_ADV_RS_110:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = true;
-                        variants::ncs = false;
+                        variants::oneonezero = true;
+                        variants::zero = false;
                         variants::reserved = false;
                         break;
                     }
                 case IDC_ADV_RS_RESERVED:
                     {
                         variants::leachSalz = false;
-                        variants::microsoft = false;
-                        variants::ncs = false;
+                        variants::oneonezero = false;
+                        variants::zero = false;
                         variants::reserved = true;
                         break;
                     }
@@ -593,7 +702,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 }
                 case ID_SAVE_INFO:
                 {
-                    MessageBox(hwnd, "Coming on v0.1.0.8 alpha", "Coming Soon", MB_OK | MB_ICONINFORMATION);
+                    SaveFile(hwnd);
                     break;
                 }
                 case ID_ABOUT:
