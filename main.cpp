@@ -50,7 +50,7 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     HANDLE hFile;
     //BOOL bSuccess = FALSE;
 
-    hFile = CreateFileA(pszFileName, GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    hFile = CreateFileA(pszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if(hFile != INVALID_HANDLE_VALUE)
     {
         DWORD dwTextLenght;
@@ -77,13 +77,13 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     }else{
         MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
     }
-    //return bSuccess;
+    return 0;
 }
 
 void SaveFile(HWND hwnd)
 {
     OPENFILENAME ofn;
-    TCHAR szFileName[MAX_PATH] = _T("");
+    char szFileName[MAX_PATH] = _T("");
 
     ZeroMemory(&ofn, sizeof(ofn));
 
@@ -91,12 +91,12 @@ void SaveFile(HWND hwnd)
     ofn.hwndOwner = hwnd;
     ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
     ofn.lpstrFile = szFileName;
-    ofn.nMaxFile = MAX_PATH;
+    ofn.nMaxFile = sizeof(szFileName);
     ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
     ofn.lpstrDefExt = "txt";
     ofn.lpstrTitle = "Save UUID Info";
 
-        if(GetSaveFileName(&ofn))
+        if(GetSaveFileName(&ofn)==TRUE)
         {
             HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
             HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
@@ -113,6 +113,8 @@ void SaveFile(HWND hwnd)
             HWND hNode = GetDlgItem(hwnd, IDS_NODE);
             HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
             HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+            //TCHAR bufTimeLow = IDS_TIMESTAMP_TIME_LOW;
+            /*
             SaveText(hTimestampText, szFileName);
             SaveText(hTSLow, szFileName);
             SaveText(hHyphen, szFileName);
@@ -134,12 +136,83 @@ void SaveFile(HWND hwnd)
             SaveText(hNewLine, szFileName);
             SaveText(hNode, szFileName);
             SaveText(hNewLine, szFileName);
+
+            */
             SaveText(hMacAddressText, szFileName);
             SaveText(hMacAddress, szFileName);
+            //wsprintf(bufTimeLow, TEXT("Timestamp: %s"), szFileName);
         }
 
 }
 
+/*
+void SaveFile(HWND hwnd)
+{
+    OPENFILENAME ofn;
+    char szFileName[MAX_PATH] = _T("");
+    HANDLE hFile;
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hwnd;
+    //ofn.lpstrFile[0] = '\0';
+
+    ofn.lpstrFile = szFileName;
+    ofn.nMaxFile = sizeof(szFileName);
+    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    //ofn.nFilterIndex = 1;
+    //ofn.lpstrFileTitle = 0;
+    //ofn.lpstrInitialDir = NULL;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+    ofn.lpstrDefExt = "txt";
+    ofn.lpstrTitle = "Save UUID Info";
+
+        if(GetSaveFileName(&ofn))
+        {
+            HWND hTimestampText = GetDlgItem(hwnd, IDSS_TIMESTAMP);
+            HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
+            HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
+            HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
+            HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
+            HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
+            HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
+            HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
+            HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
+            HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
+            HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
+            HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
+            HWND hNode = GetDlgItem(hwnd, IDS_NODE);
+            HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
+            HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
+
+            hFile = CreateFile(ofn.lpstrFile, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+            if(hFile != INVALID_HANDLE_VALUE)
+                {
+                    DWORD dwTimestampText = GetWindowTextLength(hTimestampText);
+                    if(dwTimestampText > 0)
+                    {
+                        LPSTR pszText;
+                        DWORD dwBufferSize = dwTimestampText + 1;
+
+                        pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
+                        if(pszText != NULL)
+                        {
+                            if(GetWindowText(hwnd, pszText, dwBufferSize))
+                            {
+                                DWORD dwWritten;
+                                WriteFile(hFile, pszText, dwTimestampText, &dwWritten, NULL);
+                            }
+                            GlobalFree(pszText);
+                        }
+                    }
+                    CloseHandle(hFile);
+                }else{
+                    MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
+                }
+        }
+
+}
+*/
 void charToHex(HWND hwnd){
     if(SendDlgItemMessage(hwnd, IDC_OPT_UUID_SRNG, BM_GETCHECK, 0, 0))
     {
