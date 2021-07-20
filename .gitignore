@@ -1,6 +1,8 @@
 **/bin
 **/obj
 **/.vs
+**/Debug
+**/x64
 verHistory.txt
 uuidGen.cbp
 uuidGen.layout
@@ -8,3 +10,7 @@ uuidGen.depend
 RCa01936
 helpFile.chw
 CppProperties.json
+UUID-Generator.sln
+UUID-Generator.vcxproj
+UUID-Generator.vcxproj.filters
+UUID-Generator.vcxproj.user
