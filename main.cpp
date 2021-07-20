@@ -48,7 +48,7 @@ namespace options{
 BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
 {
     HANDLE hFile;
-    BOOL bSuccess = FALSE;
+    //BOOL bSuccess = FALSE;
 
     hFile = CreateFileA(pszFileName, GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if(hFile != INVALID_HANDLE_VALUE)
@@ -67,8 +67,8 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
                 {
                     DWORD dwWritten;
 
-                    if(WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL))
-                        bSuccess = TRUE;
+                    WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL);
+                        //bSuccess = TRUE;
                 }
                 GlobalFree(pszText);
             }
@@ -77,7 +77,7 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     }else{
         MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
     }
-    return bSuccess;
+    //return bSuccess;
 }
 
 void SaveFile(HWND hwnd)
