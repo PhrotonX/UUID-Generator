@@ -49,6 +49,19 @@ namespace options{
 struct hwndSave{
     HWND hwnd;
     HWND hwnd2;
+    HWND hwnd3;
+    HWND hwnd4;
+    HWND hwnd5;
+    HWND hwnd6;
+    HWND hwnd7;
+    HWND hwnd8;
+    HWND hwnd9;
+    HWND hwnd10;
+    HWND hwnd11;
+    HWND hwnd12;
+    HWND hwnd13;
+    HWND hwnd14;
+    HWND hwnd15;
 };
 
 BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
@@ -59,31 +72,137 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
     hFile = CreateFileA(pszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if(hFile != INVALID_HANDLE_VALUE)
     {
-        DWORD dwTextLenght;
-        //DWORD dwTextLenght2;
-        dwTextLenght = GetWindowTextLength(H.hwnd);
-        //dwTextLenght2 = GetWindowTextLength(hwnd2);
-        if(dwTextLenght > 0)
+        DWORD dwTextLenght[15];
+        dwTextLenght[0] = GetWindowTextLength(H.hwnd);
+        dwTextLenght[1] = GetWindowTextLength(H.hwnd2);
+        dwTextLenght[2] = GetWindowTextLength(H.hwnd3);
+        dwTextLenght[3] = GetWindowTextLength(H.hwnd4);
+        dwTextLenght[4] = GetWindowTextLength(H.hwnd5);
+        dwTextLenght[5] = GetWindowTextLength(H.hwnd6);
+        dwTextLenght[6] = GetWindowTextLength(H.hwnd7);
+        dwTextLenght[7] = GetWindowTextLength(H.hwnd8);
+        dwTextLenght[8] = GetWindowTextLength(H.hwnd9);
+        dwTextLenght[9] = GetWindowTextLength(H.hwnd10);
+        dwTextLenght[10] = GetWindowTextLength(H.hwnd11);
+        dwTextLenght[11] = GetWindowTextLength(H.hwnd12);
+        dwTextLenght[12] = GetWindowTextLength(H.hwnd13);
+        dwTextLenght[13] = GetWindowTextLength(H.hwnd14);
+        dwTextLenght[14] = GetWindowTextLength(H.hwnd15);
+        if(dwTextLenght[0] > 0)
         {
-            LPSTR pszText;
-            DWORD dwBufferSize = dwTextLenght + 1;
-            //DWORD dwBufferSize2 = dwTextLenght2 + 1;
+            LPSTR pszText[15];
+            DWORD dwBufferSize[15];
+            dwBufferSize[0] = dwTextLenght[0] + 1;
+            dwBufferSize[1] = dwTextLenght[1] + 1;
+            dwBufferSize[2] = dwTextLenght[2] + 1;
+            dwBufferSize[3] = dwTextLenght[3] + 1;
+            dwBufferSize[4] = dwTextLenght[4] + 1;
+            dwBufferSize[5] = dwTextLenght[5] + 1;
+            dwBufferSize[6] = dwTextLenght[6] + 1;
+            dwBufferSize[7] = dwTextLenght[7] + 1;
+            dwBufferSize[8] = dwTextLenght[8] + 1;
+            dwBufferSize[9] = dwTextLenght[9] + 1;
+            dwBufferSize[10] = dwTextLenght[10] + 1;
+            dwBufferSize[11] = dwTextLenght[11] + 1;
+            dwBufferSize[12] = dwTextLenght[12] + 1;
+            dwBufferSize[13] = dwTextLenght[13] + 1;
+            dwBufferSize[14] = dwTextLenght[14] + 1;
 
-            pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
-            if(pszText != NULL)
+            pszText[0] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[0]);
+            pszText[1] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[1]);
+            pszText[2] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[2]);
+            pszText[3] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[3]);
+            pszText[4] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[4]);
+            pszText[5] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[5]);
+            pszText[6] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[6]);
+            pszText[7] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[7]);
+            pszText[8] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[8]);
+            pszText[9] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[9]);
+            pszText[10] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[10]);
+            pszText[11] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[11]);
+            pszText[12] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[12]);
+            pszText[13] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[13]);
+            pszText[14] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[14]);
+
+            if(pszText[0] != NULL)
             {
-                if(GetWindowText(H.hwnd, pszText, dwBufferSize))
+                if(GetWindowText(H.hwnd, pszText[0], dwBufferSize[0]))
                 {
                     DWORD dwWritten;
-                    WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL);
+                    WriteFile(hFile, pszText[0], dwTextLenght[0], &dwWritten, NULL);
                         //bSuccess = TRUE;
-                        if(GetWindowText(H.hwnd2, pszText, dwBufferSize))
-                        {
+                        if(GetWindowText(H.hwnd2, pszText[1], dwBufferSize[1])){
                             DWORD dwWritten;
-                            WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL);
+                            WriteFile(hFile, pszText[1], dwTextLenght[1], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd3, pszText[2], dwBufferSize[2])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[2], dwTextLenght[2], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd4, pszText[3], dwBufferSize[3])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[3], dwTextLenght[3], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd5, pszText[4], dwBufferSize[4])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[4], dwTextLenght[4], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd6, pszText[5], dwBufferSize[5])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[5], dwTextLenght[5], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd7, pszText[6], dwBufferSize[6])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[6], dwTextLenght[6], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd8, pszText[7], dwBufferSize[7])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[7], dwTextLenght[7], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd9, pszText[8], dwBufferSize[8])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[8], dwTextLenght[8], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd10, pszText[9], dwBufferSize[9])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[9], dwTextLenght[9], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd11, pszText[10], dwBufferSize[10])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[10], dwTextLenght[10], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd12, pszText[11], dwBufferSize[11])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[11], dwTextLenght[11], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd13, pszText[12], dwBufferSize[12])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[12], dwTextLenght[12], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd14, pszText[13], dwBufferSize[13])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[13], dwTextLenght[13], &dwWritten, NULL);
+                        }
+                        if(GetWindowText(H.hwnd15, pszText[14], dwBufferSize[14])){
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText[14], dwTextLenght[14], &dwWritten, NULL);
                         }
                 }
-                GlobalFree(pszText);
+                GlobalFree(pszText[0]);
+                GlobalFree(pszText[1]);
+                GlobalFree(pszText[2]);
+                GlobalFree(pszText[3]);
+                GlobalFree(pszText[4]);
+                GlobalFree(pszText[5]);
+                GlobalFree(pszText[6]);
+                GlobalFree(pszText[7]);
+                GlobalFree(pszText[8]);
+                GlobalFree(pszText[9]);
+                GlobalFree(pszText[10]);
+                GlobalFree(pszText[11]);
+                GlobalFree(pszText[12]);
+                GlobalFree(pszText[13]);
+                GlobalFree(pszText[14]);
             }
         }
         CloseHandle(hFile);
@@ -115,46 +234,33 @@ void SaveFile(HWND hwnd)
             HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
             HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
             HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
+
             HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
             HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
             HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
+
             HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
+
             HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
+
             HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
+
             HWND hClockSeq = GetDlgItem(hwnd, IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW);
+
             HWND hVariant = GetDlgItem(hwnd, IDS_VARIANT);
+
             HWND hNode = GetDlgItem(hwnd, IDS_NODE);
+
             HWND hMacAddressText = GetDlgItem(hwnd, IDSS_MAC_ADDRESS);
             HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
-            //TCHAR bufTimeLow = IDS_TIMESTAMP_TIME_LOW;
-            /*
-            SaveText(hTimestampText, szFileName);
-            SaveText(hTSLow, szFileName);
-            SaveText(hHyphen, szFileName);
-            SaveText(hTSMid, szFileName);
-            SaveText(hHyphen, szFileName);
-            SaveText(hTSHigh, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hTimeLow, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hTimeMid, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hTimeHigh, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hVersion, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hClockSeq, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hVariant, szFileName);
-            SaveText(hNewLine, szFileName);
-            SaveText(hNode, szFileName);
-            SaveText(hNewLine, szFileName);
 
-            */
-            hwndSave hSave = {hMacAddressText, hMacAddress};
+            hwndSave hSave = {hTimestampText, hTSLow, hHyphen, hTSMid,
+                                hTSHigh, hNewLine, hTimeLow, hTimeMid,
+                                hTimeHigh, hVersion, hClockSeq, hVariant,
+                                hNode, hMacAddressText, hMacAddress};
+
+            /*hwndSave hSave = {hTimestampText, hMacAddressText, hMacAddress};*/
             SaveText(hSave, szFileName);
-            //SaveText(hMacAddress, szFileName);
-            //wsprintf(bufTimeLow, TEXT("Timestamp: %s"), szFileName);
         }
 
 }
@@ -546,6 +652,7 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         SendMessage(hEdit, EM_SETSEL, (WPARAM)index, (LPARAM)index);
                         SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)hyphen.c_str());
                     }
+                    SetDlgItemText(hwnd, IDS_HYPHEN, hyphen.c_str());
 
                     TCHAR*pszStringTimeMid = time_mid;
                     SendMessage(hEdit, EM_REPLACESEL, 0, (LPARAM)pszStringTimeMid);
@@ -630,8 +737,9 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     char pszHyphen[] = "-";
                     SetDlgItemText(hwnd, IDS_HYPHEN, pszHyphen);
 
+                    /*
                     char pszNewLine[] = "\n";
-                    SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
+                    SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);*/
 
                     char pszMacAddressText[] = "MAC Address: ";
                     SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
