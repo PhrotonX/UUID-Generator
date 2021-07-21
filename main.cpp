@@ -45,7 +45,13 @@ namespace options{
     bool uppercase = false;
 }
 
-BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
+//Structure for saving HWND variables in a .txt file
+struct hwndSave{
+    HWND hwnd;
+    HWND hwnd2;
+};
+
+BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
 {
     HANDLE hFile;
     //BOOL bSuccess = FALSE;
@@ -54,28 +60,35 @@ BOOL SaveText(HWND hwnd, LPCTSTR pszFileName)
     if(hFile != INVALID_HANDLE_VALUE)
     {
         DWORD dwTextLenght;
-        dwTextLenght = GetWindowTextLength(hwnd);
+        //DWORD dwTextLenght2;
+        dwTextLenght = GetWindowTextLength(H.hwnd);
+        //dwTextLenght2 = GetWindowTextLength(hwnd2);
         if(dwTextLenght > 0)
         {
             LPSTR pszText;
             DWORD dwBufferSize = dwTextLenght + 1;
+            //DWORD dwBufferSize2 = dwTextLenght2 + 1;
 
             pszText = (LPSTR)GlobalAlloc(GPTR, dwBufferSize);
             if(pszText != NULL)
             {
-                if(GetWindowText(hwnd, pszText, dwBufferSize))
+                if(GetWindowText(H.hwnd, pszText, dwBufferSize))
                 {
                     DWORD dwWritten;
-
                     WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL);
                         //bSuccess = TRUE;
+                        if(GetWindowText(H.hwnd2, pszText, dwBufferSize))
+                        {
+                            DWORD dwWritten;
+                            WriteFile(hFile, pszText, dwTextLenght, &dwWritten, NULL);
+                        }
                 }
                 GlobalFree(pszText);
             }
         }
         CloseHandle(hFile);
     }else{
-        MessageBox(hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
+        MessageBox(H.hwnd, "Invalid Handle Value", "Error", MB_OK | MB_ICONSTOP);
     }
     return 0;
 }
@@ -138,8 +151,9 @@ void SaveFile(HWND hwnd)
             SaveText(hNewLine, szFileName);
 
             */
-            SaveText(hMacAddressText, szFileName);
-            SaveText(hMacAddress, szFileName);
+            hwndSave hSave = {hMacAddressText, hMacAddress};
+            SaveText(hSave, szFileName);
+            //SaveText(hMacAddress, szFileName);
             //wsprintf(bufTimeLow, TEXT("Timestamp: %s"), szFileName);
         }
 
