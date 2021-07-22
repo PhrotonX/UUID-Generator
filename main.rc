@@ -29,7 +29,7 @@ FONT 8, "Ms Shell Dlg"
     GROUPBOX        "UUID Info", 0, 207, 7, 150, 115, WS_GROUP, WS_EX_LEFT
     LTEXT           "MAC Address:", IDSS_MAC_ADDRESS, 212, 107, 46, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_MAC_ADDRESS, 262, 107, 90, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "-", 0, 272, 17, 8, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "-", IDS_HYPHEN, 272, 17, 8, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, 212, 77, 120, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIME_HI_AND_VERSION, 282, 47, 70, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIME_MID, 247, 37, 105, 9, SS_LEFT, WS_EX_LEFT
@@ -87,7 +87,7 @@ FONT 8, "Ms Shell Dlg"
     GROUPBOX        "About", 0, 7, 7, 145, 81, 0, WS_EX_LEFT
     LTEXT           "This program is not affiliated by any companies", 0, 12, 57, 135, 20, SS_LEFT, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 77, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.9 alpha build 394", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.9 alpha build 405", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 157, 22, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 157, 37, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT
