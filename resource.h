@@ -44,3 +44,6 @@
 #define IDS_NEWLINE                             40049
 #define IDS_HYPHEN                              40050
 #define IDSS_TIMESTAMP                          40051
+#define IDSS_TIMESTAMP_LOW                      40052
+#define IDSS_TIMESTAMP_MID                      40053
+#define IDSS_TIMESTAMP_HI                       40054

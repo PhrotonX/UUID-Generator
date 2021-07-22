@@ -48,9 +48,7 @@ namespace options{
 //Structure for saving HWND variables in a .txt file
 struct hwndSave{
     HWND hwnd; HWND hwnd2; HWND hwnd3;
-    HWND hwnd4;
-    HWND hwnd5;
-    HWND hwnd6;
+    HWND hwnd4; HWND hwnd5; HWND hwnd6;
     HWND hwnd7;
     HWND hwnd8;
     HWND hwnd9;
@@ -61,6 +59,9 @@ struct hwndSave{
     HWND hwnd14;
     HWND hwnd15;
     HWND hwnd16;
+    HWND hwnd17;
+    HWND hwnd18;
+    HWND hwnd19;
 };
 
 BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
@@ -71,7 +72,7 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
     hFile = CreateFileA(pszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if(hFile != INVALID_HANDLE_VALUE)
     {
-        DWORD dwTextLenght[15];
+        DWORD dwTextLenght[18];
         dwTextLenght[0] = GetWindowTextLength(H.hwnd);
         dwTextLenght[1] = GetWindowTextLength(H.hwnd2);
         dwTextLenght[2] = GetWindowTextLength(H.hwnd3);
@@ -88,10 +89,13 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
         dwTextLenght[13] = GetWindowTextLength(H.hwnd14);
         dwTextLenght[14] = GetWindowTextLength(H.hwnd15);
         dwTextLenght[15] = GetWindowTextLength(H.hwnd16);
+        dwTextLenght[16] = GetWindowTextLength(H.hwnd17);
+        dwTextLenght[17] = GetWindowTextLength(H.hwnd18);
+        dwTextLenght[18] = GetWindowTextLength(H.hwnd19);
         if(dwTextLenght[0] > 0)
         {
-            LPSTR pszText[15];
-            DWORD dwBufferSize[15];
+            LPSTR pszText[18];
+            DWORD dwBufferSize[18];
             dwBufferSize[0] = dwTextLenght[0] + 1;
             dwBufferSize[1] = dwTextLenght[1] + 1;
             dwBufferSize[2] = dwTextLenght[2] + 1;
@@ -108,6 +112,9 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
             dwBufferSize[13] = dwTextLenght[13] + 1;
             dwBufferSize[14] = dwTextLenght[14] + 1;
             dwBufferSize[15] = dwTextLenght[15] + 1;
+            dwBufferSize[16] = dwTextLenght[16] + 1;
+            dwBufferSize[17] = dwTextLenght[17] + 1;
+            dwBufferSize[18] = dwTextLenght[18] + 1;
 
             pszText[0] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[0]);
             pszText[1] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[1]);
@@ -125,6 +132,9 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
             pszText[13] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[13]);
             pszText[14] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[14]);
             pszText[15] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[15]);
+            pszText[16] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[16]);
+            pszText[17] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[17]);
+            pszText[18] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[18]);
 
             if(pszText[0] != NULL)
             {
@@ -175,8 +185,17 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
                         GetWindowText(H.hwnd15, pszText[14], dwBufferSize[14]);
                             WriteFile(hFile, pszText[14], dwTextLenght[14], &dwWritten, NULL);
 
-                        GetWindowText(H.hwnd15, pszText[15], dwBufferSize[15]);
+                        GetWindowText(H.hwnd16, pszText[15], dwBufferSize[15]);
                             WriteFile(hFile, pszText[15], dwTextLenght[15], &dwWritten, NULL);
+
+                        GetWindowText(H.hwnd17, pszText[16], dwBufferSize[16]);
+                            WriteFile(hFile, pszText[16], dwTextLenght[16], &dwWritten, NULL);
+
+                        GetWindowText(H.hwnd18, pszText[17], dwBufferSize[17]);
+                            WriteFile(hFile, pszText[17], dwTextLenght[17], &dwWritten, NULL);
+
+                        GetWindowText(H.hwnd19, pszText[18], dwBufferSize[18]);
+                            WriteFile(hFile, pszText[18], dwTextLenght[18], &dwWritten, NULL);
 
                 }
                 GlobalFree(pszText[0]);
@@ -195,6 +214,9 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
                 GlobalFree(pszText[13]);
                 GlobalFree(pszText[14]);
                 GlobalFree(pszText[15]);
+                GlobalFree(pszText[16]);
+                GlobalFree(pszText[17]);
+                GlobalFree(pszText[18]);
 
             }
         }
@@ -227,13 +249,13 @@ void SaveFile(HWND hwnd)
             HWND hTSLow = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_LOW);
             HWND hHyphen = GetDlgItem(hwnd, IDS_HYPHEN);
             HWND hTSMid = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_MID);
-
             HWND hTSHigh = GetDlgItem(hwnd, IDS_TIMESTAMP_TIME_HIGH_AND_VERSION);
             HWND hNewLine = GetDlgItem(hwnd, IDS_NEWLINE);
+            HWND hTimeLowText = GetDlgItem(hwnd, IDSS_TIMESTAMP_LOW);
             HWND hTimeLow = GetDlgItem(hwnd, IDS_TIME_LOW);
-
+            HWND hTimeMidText = GetDlgItem(hwnd, IDSS_TIMESTAMP_MID);
             HWND hTimeMid = GetDlgItem(hwnd, IDS_TIME_MID);
-
+            HWND hTimeHighText = GetDlgItem(hwnd, IDSS_TIMESTAMP_HI);
             HWND hTimeHigh = GetDlgItem(hwnd, IDS_TIME_HI_AND_VERSION);
 
             HWND hVersion = GetDlgItem(hwnd, IDS_VERSION);
@@ -248,11 +270,10 @@ void SaveFile(HWND hwnd)
             HWND hMacAddress = GetDlgItem(hwnd, IDS_MAC_ADDRESS);
 
             hwndSave hSave = {hTimestampText, hTSLow, hHyphen, hTSMid, hHyphen,
-                                hTSHigh, hNewLine, hTimeLow, hTimeMid,
-                                hTimeHigh, hVersion, hClockSeq, hVariant,
+                                hTSHigh, hNewLine, hTimeLowText, hTimeLow, hNewLine,
+                                hTimeMidText, hTimeMid, hTimeHigh, hVersion, hClockSeq, hVariant,
                                 hNode, hMacAddressText, hMacAddress};
 
-            /*hwndSave hSave = {hTimestampText, hMacAddressText, hMacAddress};*/
             SaveText(hSave, szFileName);
         }
 
