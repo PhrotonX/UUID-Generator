@@ -2,13 +2,11 @@
 // Copyright (C) 2006-2015
 // http://www.resedit.net
 
-#define APSTUDIO_HIDDEN_SYMBOLS
 #include <windows.h>
-#include <prsht.h>
 #include <commctrl.h>
 #include <richedit.h>
 #include "resource.h"
-#undef APSTUDIO_HIDDEN_SYMBOLS
+
 
 
 
@@ -23,32 +21,33 @@ FONT 8, "Ms Shell Dlg"
 {
     GROUPBOX        "Generator", 0, 12, 7, 190, 65, WS_GROUP, WS_EX_LEFT
     PUSHBUTTON      "Copy", ID_COPY, 72, 52, 50, 14, 0, WS_EX_LEFT
-    LTEXT           "UUID", 0, 17, 17, 19, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "UUID: ", IDSS_UUID, 17, 17, 19, 9, SS_LEFT, WS_EX_LEFT
     DEFPUSHBUTTON   "Generate", ID_GENERATE, 17, 52, 50, 14, 0, WS_EX_LEFT
     EDITTEXT        IDC_UUID_EDIT, 17, 27, 180, 12, ES_AUTOHSCROLL, WS_EX_LEFT
     GROUPBOX        "UUID Info", 0, 207, 7, 150, 115, WS_GROUP, WS_EX_LEFT
     LTEXT           "MAC Address:", IDSS_MAC_ADDRESS, 212, 107, 46, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_MAC_ADDRESS, 262, 107, 90, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "-", 0, 272, 17, 8, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "-", IDS_HYPHEN, 272, 17, 8, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_CLOCK_SEQ_HI_AND_RES_CLOCK_SEQ_LOW, 212, 77, 120, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIME_HI_AND_VERSION, 282, 47, 70, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIME_MID, 247, 37, 105, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIME_LOW, 247, 27, 105, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "node:", 0, 212, 97, 19, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "node:", IDSS_NODE, 212, 97, 19, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_NODE, 237, 97, 115, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Variant:", 0, 212, 87, 25, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version:", 0, 212, 57, 26, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "\n", IDS_NEWLINE, 347, 72, 1, 17, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Variant:", IDSS_VARIANT, 212, 87, 25, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version:", IDSS_VERSION, 212, 57, 26, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_VERSION, 237, 57, 115, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_VARIANT, 237, 87, 115, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "time_mid:", 0, 212, 37, 30, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Timestamp:", 0, 212, 17, 37, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "time_mid:", IDSS_TIMESTAMP_MID, 212, 37, 30, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Timestamp:", IDSS_TIMESTAMP, 212, 17, 37, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIMESTAMP_TIME_HIGH_AND_VERSION, 252, 17, 20, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "0", IDS_TIMESTAMP_TIME_MID, 277, 17, 25, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "0", IDS_TIMESTAMP_TIME_MID, 282, 17, 25, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "0", IDS_TIMESTAMP_TIME_LOW, 315, 17, 40, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "-", 0, 302, 17, 8, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "clock_seq_hi_and_res clock_seq_low:", 0, 212, 67, 124, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "time_low:", 0, 212, 27, 30, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "time_hi_and_version:", 0, 212, 47, 68, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "-", 0, 307, 17, 8, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "clock_seq_hi_and_res clock_seq_low:", IDSS_CLOCKSEQ, 212, 67, 124, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "time_low:", IDSS_TIMESTAMP_LOW, 212, 27, 30, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "time_hi_and_version:", IDSS_TIMESTAMP_HI, 212, 47, 68, 9, SS_LEFT, WS_EX_LEFT
     GROUPBOX        "Options", 0, 207, 125, 152, 115, 0, WS_EX_LEFT
     PUSHBUTTON      "About", ID_ABOUT, 302, 222, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "?", ID_HELP, 217, 222, 27, 14, 0, WS_EX_LEFT
@@ -87,7 +86,7 @@ FONT 8, "Ms Shell Dlg"
     GROUPBOX        "About", 0, 7, 7, 145, 81, 0, WS_EX_LEFT
     LTEXT           "This program is not affiliated by any companies", 0, 12, 57, 135, 20, SS_LEFT, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 77, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0.8 alpha build 360", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.0.9 alpha build 413", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 157, 22, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 157, 37, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT
@@ -101,8 +100,8 @@ FONT 8, "Ms Shell Dlg"
 //
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 50000 VERSIONINFO
-    FILEVERSION     0,1,0,8
-    PRODUCTVERSION  0,1,0,8
+    FILEVERSION     0,1,0,9
+    PRODUCTVERSION  0,1,0,9
     FILEOS          VOS_NT_WINDOWS32
     FILETYPE        VFT_APP
     FILESUBTYPE     VFT2_UNKNOWN
