@@ -47,3 +47,8 @@
 #define IDSS_TIMESTAMP_LOW                      40052
 #define IDSS_TIMESTAMP_MID                      40053
 #define IDSS_TIMESTAMP_HI                       40054
+#define IDSS_VERSION                            40054
+#define IDSS_CLOCKSEQ                           40055
+#define IDSS_VARIANT                            40056
+#define IDSS_NODE                               40057
+#define IDSS_UUID                               40058
