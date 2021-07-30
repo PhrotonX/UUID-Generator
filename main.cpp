@@ -409,6 +409,7 @@ void charToHex(HWND hwnd){
     {
         srand(time(NULL));
     }
+
     if(options::lowercase == true)
     {
         char hex[] = "0123456789abcdef";
@@ -586,6 +587,7 @@ void charToHex(HWND hwnd){
     macAddress[13] = node[9];
     macAddress[15] = node[10];
     macAddress[16] = node[11];
+
 }
 
 INT_PTR AboutDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -808,10 +810,6 @@ INT_PTR DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     char NewLine_t[2] = "\n";
                     TCHAR*pszNewLine = NewLine_t;
                     SetDlgItemText(hwnd, IDS_NEWLINE, pszNewLine);
-                    /*
-                    char pszMacAddressText[] = "MAC Address: ";
-                    SetDlgItemText(hwnd, IDSS_MAC_ADDRESS, pszMacAddressText);
-                    */
 
                     SetDlgItemText(hwnd, IDS_MAC_ADDRESS, macAddress);
                     break;
