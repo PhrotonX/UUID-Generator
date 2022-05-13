@@ -86,7 +86,7 @@ FONT 8, "Ms Shell Dlg"
     GROUPBOX        "About", 0, 7, 7, 145, 81, 0, WS_EX_LEFT
     LTEXT           "This program is not affiliated by any companies", 0, 12, 57, 135, 20, SS_LEFT, WS_EX_LEFT
     LTEXT           "Developed by: Phroton", 0, 12, 77, 74, 9, SS_LEFT, WS_EX_LEFT
-    LTEXT           "Version 0.1.0 alpha build 416", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Version 0.1.1 alpha build 431", 0, 12, 27, 135, 30, SS_LEFT, WS_EX_LEFT
     PUSHBUTTON      "Update", ID_ABOUT_UPDATE, 157, 22, 50, 14, 0, WS_EX_LEFT
     PUSHBUTTON      "View Repo", ID_ABOUT_VIEW_REPO, 157, 37, 49, 14, 0, WS_EX_LEFT
     LTEXT           "UUID Generator", 0, 12, 17, 52, 9, SS_LEFT, WS_EX_LEFT
