@@ -129,75 +129,10 @@ BOOL SaveText(struct hwndSave H, LPCTSTR pszFileName)
         {
             LPSTR pszText[33];
             DWORD dwBufferSize[33];
-            dwBufferSize[0] = dwTextLenght[0] + 1;
-            dwBufferSize[1] = dwTextLenght[1] + 1;
-            dwBufferSize[2] = dwTextLenght[2] + 1;
-            dwBufferSize[3] = dwTextLenght[3] + 1;
-            dwBufferSize[4] = dwTextLenght[4] + 1;
-            dwBufferSize[5] = dwTextLenght[5] + 1;
-            dwBufferSize[6] = dwTextLenght[6] + 1;
-            dwBufferSize[7] = dwTextLenght[7] + 1;
-            dwBufferSize[8] = dwTextLenght[8] + 1;
-            dwBufferSize[9] = dwTextLenght[9] + 1;
-            dwBufferSize[10] = dwTextLenght[10] + 1;
-            dwBufferSize[11] = dwTextLenght[11] + 1;
-            dwBufferSize[12] = dwTextLenght[12] + 1;
-            dwBufferSize[13] = dwTextLenght[13] + 1;
-            dwBufferSize[14] = dwTextLenght[14] + 1;
-            dwBufferSize[15] = dwTextLenght[15] + 1;
-            dwBufferSize[16] = dwTextLenght[16] + 1;
-            dwBufferSize[17] = dwTextLenght[17] + 1;
-            dwBufferSize[18] = dwTextLenght[18] + 1;
-            dwBufferSize[19] = dwTextLenght[19] + 1;
-            dwBufferSize[20] = dwTextLenght[20] + 1;
-            dwBufferSize[21] = dwTextLenght[21] + 1;
-            dwBufferSize[22] = dwTextLenght[22] + 1;
-            dwBufferSize[23] = dwTextLenght[23] + 1;
-            dwBufferSize[24] = dwTextLenght[24] + 1;
-            dwBufferSize[25] = dwTextLenght[25] + 1;
-            dwBufferSize[26] = dwTextLenght[26] + 1;
-            dwBufferSize[27] = dwTextLenght[27] + 1;
-            dwBufferSize[28] = dwTextLenght[28] + 1;
-            dwBufferSize[29] = dwTextLenght[29] + 1;
-            dwBufferSize[30] = dwTextLenght[30] + 1;
-            dwBufferSize[31] = dwTextLenght[31] + 1;
-            dwBufferSize[32] = dwTextLenght[32] + 1;
-            dwBufferSize[33] = dwTextLenght[33] + 1;
-
-            pszText[0] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[0]);
-            pszText[1] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[1]);
-            pszText[2] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[2]);
-            pszText[3] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[3]);
-            pszText[4] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[4]);
-            pszText[5] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[5]);
-            pszText[6] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[6]);
-            pszText[7] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[7]);
-            pszText[8] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[8]);
-            pszText[9] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[9]);
-            pszText[10] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[10]);
-            pszText[11] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[11]);
-            pszText[12] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[12]);
-            pszText[13] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[13]);
-            pszText[14] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[14]);
-            pszText[15] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[15]);
-            pszText[16] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[16]);
-            pszText[17] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[17]);
-            pszText[18] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[18]);
-            pszText[19] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[19]);
-            pszText[20] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[20]);
-            pszText[21] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[21]);
-            pszText[22] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[22]);
-            pszText[23] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[23]);
-            pszText[24] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[24]);
-            pszText[25] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[25]);
-            pszText[26] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[26]);
-            pszText[27] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[27]);
-            pszText[28] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[28]);
-            pszText[29] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[29]);
-            pszText[30] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[30]);
-            pszText[31] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[31]);
-            pszText[32] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[32]);
-            pszText[33] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[33]);
+            for(int i = 0; i < 34; i++){
+                dwBufferSize[i] = dwTextLenght[i] + 1;
+                pszText[i] = (LPSTR)GlobalAlloc(GPTR, dwBufferSize[i]);
+            }
 
             if(pszText[0] != NULL)
             {
